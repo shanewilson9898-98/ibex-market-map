@@ -10,25 +10,25 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
             background: #ffffff;
             padding: 50px 30px;
         }
-        
+
         .container {
             max-width: 1600px;
             margin: 0 auto;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 60px;
             padding-bottom: 30px;
             border-bottom: 2px solid #f0f0f0;
         }
-        
+
         .header h1 {
             font-size: 48px;
             font-weight: 700;
@@ -37,19 +37,19 @@
             letter-spacing: -0.5px;
             line-height: 1.2;
         }
-        
+
         .header .subtitle {
             font-size: 18px;
             color: #666;
             font-weight: 400;
             margin-top: 10px;
         }
-        
+
         .category-section {
             margin-bottom: 50px;
             break-inside: avoid;
         }
-        
+
         .category-header {
             background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
             color: white;
@@ -58,28 +58,28 @@
             margin-bottom: 24px;
             box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
         }
-        
+
         .category-title {
             font-size: 22px;
             font-weight: 600;
             letter-spacing: 0.3px;
             color: #ffffff;
         }
-        
+
         .category-count {
             font-size: 14px;
             opacity: 0.95;
             margin-top: 6px;
             font-weight: 400;
         }
-        
+
         .companies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
             gap: 18px;
             padding: 0 10px;
         }
-        
+
         .company-card {
             background: #ffffff;
             border: 1.5px solid #e5e7eb;
@@ -94,13 +94,13 @@
             cursor: pointer;
             text-decoration: none;
         }
-        
+
         .company-card:hover {
             border-color: #7C3AED;
             box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
             transform: translateY(-3px);
         }
-        
+
         .company-logo {
             width: 85px;
             height: 85px;
@@ -108,7 +108,7 @@
             margin-bottom: 14px;
             filter: grayscale(0%);
         }
-        
+
         .company-logo.fallback {
             width: 100%;
             height: 65px;
@@ -124,7 +124,7 @@
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
             border-radius: 8px;
         }
-        
+
         .company-name {
             font-size: 13px;
             color: #374151;
@@ -134,37 +134,37 @@
             word-wrap: break-word;
             max-width: 100%;
         }
-        
+
         .footer {
             text-align: center;
             margin-top: 60px;
             padding-top: 40px;
             border-top: 2px solid #f0f0f0;
         }
-        
+
         .stats {
             margin-bottom: 25px;
         }
-        
+
         .stats-number {
             font-size: 56px;
             font-weight: 700;
             color: #7C3AED;
             margin-bottom: 10px;
         }
-        
+
         .stats-label {
             font-size: 16px;
             color: #6b7280;
             font-weight: 500;
         }
-        
+
         .footer-branding {
             font-size: 14px;
             color: #9ca3af;
             margin-top: 20px;
         }
-        
+
         @media print {
             body {
                 padding: 20px;
@@ -173,36 +173,36 @@
                 page-break-inside: avoid;
             }
         }
-        
+
         /* Purple gradient variations for different categories */
         .category-section:nth-child(1) .category-header {
             background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
         }
-        
+
         .category-section:nth-child(2) .category-header {
             background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 100%);
         }
-        
+
         .category-section:nth-child(3) .category-header {
             background: linear-gradient(135deg, #9333EA 0%, #D8B4FE 100%);
         }
-        
+
         .category-section:nth-child(4) .category-header {
             background: linear-gradient(135deg, #7C3AED 0%, #C4B5FD 100%);
         }
-        
+
         .category-section:nth-child(5) .category-header {
             background: linear-gradient(135deg, #6D28D9 0%, #A78BFA 100%);
         }
-        
+
         .category-section:nth-child(6) .category-header {
             background: linear-gradient(135deg, #8B5CF6 0%, #DDD6FE 100%);
         }
-        
+
         .category-section:nth-child(7) .category-header {
             background: linear-gradient(135deg, #7C3AED 0%, #E9D5FF 100%);
         }
-    
+
         .nav-links {
             text-align: center;
             margin-bottom: 40px;
@@ -225,26 +225,25 @@
             background: #7C3AED;
             color: white;
         }
-
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>Shane Wilson for Ibex: Winter 2026 Market Map</h1>
-            H6 Target Companies Across Industrial & Logistics Verticals</div>
-        
-        <div class="nav-links">
-            <a href="market_map_ibex_prototype.html" style="background: #7C3AED; color: white;">Market Map</a>
-            <a href="sales_funnel_ibex_prototype.html">Deal Flow</a>
+            <div class="subtitle">107 Target Companies Across Industrial &amp; Logistics Verticals</div>
         </div>
-</div>
-        
+
+        <div class="nav-links">
+            <a href="index.html" style="background: #7C3AED; color: white;">Market Map</a>
+            <a href="sales_funnel_ibex_prototype_v5.html">Deal Flow</a>
+        </div>
+
         <div id="market-map"></div>
-        
+
         <div class="footer">
             <div class="stats">
-                H6</div>
+                <div class="stats-number">107</div>
                 <div class="stats-label">Companies Mapped Across 9 Categories</div>
             </div>
             <div class="footer-branding">
@@ -254,6 +253,37 @@
     </div>
 
     <script>
+        const LOGO_OVERRIDES = {
+            "Belli (Business/Productivity Software)": "https://image.pitchbook.com/xWE2mipZ6E676ujSc53MKbckesyJb1762924006728_50x50"
+        };
+
+        function normalizeDomain(url) {
+            if (!url) return "";
+            let u = String(url).trim();
+            u = u.replace(/^https?:\/\//i, "");
+            u = u.replace(/^www\./i, "");
+            u = u.split("/")[0];
+            return u;
+        }
+
+        function resolveLogo(company) {
+            const name = company["Company Name"] || "";
+            if (LOGO_OVERRIDES[name]) return LOGO_OVERRIDES[name];
+
+            const raw = company["Logo link"] || "";
+            const rawStr = String(raw).trim();
+
+            // Accept direct image URLs (PitchBook image CDN, favicons, clearbit, etc.)
+            if (rawStr && /^https?:\/\//i.test(rawStr) && !rawStr.includes("my.pitchbook.com/profile")) {
+                return rawStr;
+            }
+
+            // If it's a PitchBook profile link or missing, fall back to Clearbit by domain
+            const domain = normalizeDomain(company["Url"] || "");
+            if (domain) return "https://logo.clearbit.com/" + domain;
+            return "";
+        }
+
         const marketMapData = {
   "Asset Visibility, Monitoring, and Risk": [
     {
@@ -807,42 +837,42 @@
 
         function createMarketMap() {
             const container = document.getElementById('market-map');
-            
+
             Object.entries(marketMapData).forEach(([category, companies]) => {
                 const section = document.createElement('div');
                 section.className = 'category-section';
-                
+
                 const header = document.createElement('div');
                 header.className = 'category-header';
                 header.innerHTML = `
                     <div class="category-title">${category}</div>
                     <div class="category-count">${companies.length} companies</div>
                 `;
-                
+
                 const grid = document.createElement('div');
                 grid.className = 'companies-grid';
-                
+
                 companies.forEach(company => {
                     const card = document.createElement('a');
                     card.className = 'company-card';
-                    // Add http:// if URL doesn't start with protocol
+
                     let url = company.Url || '#';
                     if (url !== '#' && !url.startsWith('http')) {
                         url = 'http://' + url;
                     }
                     card.href = url;
                     card.target = '_blank';
-                    
+
                     const logoContainer = document.createElement('div');
-                    
-                    // Check if logo link exists and is valid
-                    if (company['Logo link'] && company['Logo link'] !== '' && !company['Logo link'].includes('my.pitchbook.com/profile')) {
+
+                    const logoUrl = resolveLogo(company);
+
+                    if (logoUrl) {
                         const img = document.createElement('img');
                         img.className = 'company-logo';
-                        img.src = company['Logo link'];
+                        img.src = logoUrl;
                         img.alt = company['Company Name'];
                         img.onerror = function() {
-                            // Fallback to text if image fails to load
                             this.style.display = 'none';
                             const fallback = document.createElement('div');
                             fallback.className = 'company-logo fallback';
@@ -851,29 +881,27 @@
                         };
                         logoContainer.appendChild(img);
                     } else {
-                        // Use company name as fallback
                         const fallback = document.createElement('div');
                         fallback.className = 'company-logo fallback';
                         fallback.textContent = company['Company Name'];
                         logoContainer.appendChild(fallback);
                     }
-                    
+
                     const name = document.createElement('div');
                     name.className = 'company-name';
                     name.textContent = company['Company Name'];
-                    
+
                     card.appendChild(logoContainer);
                     card.appendChild(name);
                     grid.appendChild(card);
                 });
-                
+
                 section.appendChild(header);
                 section.appendChild(grid);
                 container.appendChild(section);
             });
         }
 
-        // Initialize the map when the page loads
         document.addEventListener('DOMContentLoaded', createMarketMap);
     </script>
 </body>
