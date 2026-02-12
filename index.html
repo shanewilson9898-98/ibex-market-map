@@ -8,10 +8,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
       background: #ffffff;
       padding: 50px 30px;
-      color: #111827;
     }
 
     .container { max-width: 1600px; margin: 0 auto; }
@@ -19,7 +18,7 @@
     .header {
       text-align: center;
       margin-bottom: 40px;
-      padding-bottom: 28px;
+      padding-bottom: 30px;
       border-bottom: 2px solid #f0f0f0;
     }
 
@@ -39,10 +38,7 @@
       margin-top: 10px;
     }
 
-    .nav-links {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+    .nav-links { text-align: center; margin: 18px 0 26px 0; }
 
     .nav-links a {
       display: inline-block;
@@ -54,113 +50,222 @@
       border-radius: 8px;
       font-weight: 500;
       font-size: 15px;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
     }
 
-    .nav-links a:hover {
-      background: #7C3AED;
-      color: white;
-    }
+    .nav-links a:hover { background: #7C3AED; color: white; }
+    .nav-links a.active { background: #7C3AED; color: white; }
 
-    .nav-links a.active {
-      background: #7C3AED;
-      color: white;
-    }
-
-    .category-section {
-      margin-bottom: 50px;
-      break-inside: avoid;
-    }
-
-    .category-header {
-      background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
-      color: white;
-      padding: 18px 28px;
+    /* --- Status --- */
+    .status {
+      max-width: 1100px;
+      margin: 0 auto 18px auto;
+      padding: 14px 16px;
       border-radius: 12px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
-    }
-
-    .category-title {
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      color: #ffffff;
-    }
-
-    .category-count {
+      border: 1px solid #eee;
+      background: #fafafa;
+      color: #374151;
       font-size: 14px;
-      opacity: 0.95;
-      margin-top: 6px;
-      font-weight: 400;
+      line-height: 1.35;
+    }
+    .status strong { color: #111827; }
+    .status.error { border-color: #fecaca; background: #fff1f2; color: #991b1b; }
+    .status.ok { border-color: #d1fae5; background: #ecfdf5; color: #065f46; }
+    .status .muted { color: #6b7280; }
+
+    /* --- Controls --- */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px auto 22px auto;
+      max-width: 1400px;
     }
 
-    .companies-grid {
+    .search {
+      flex: 1 1 420px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .pillbar {
+      flex: 1 1 520px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #e9d5ff;
+      background: rgba(124, 58, 237, 0.06);
+      color: #6B46C1;
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .pill:hover { background: rgba(124, 58, 237, 0.12); }
+    .pill.active { background: #7C3AED; color: white; border-color: #7C3AED; }
+
+    /* --- Sections --- */
+    .section {
+      margin: 30px auto 22px auto;
+      max-width: 1600px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 0 6px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .section-count {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-      gap: 18px;
-      padding: 0 10px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
     }
 
-    .company-card {
-      background: #ffffff;
-      border: 1.5px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 22px 18px;
+    @media (max-width: 1400px) { .grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px)  { .grid { grid-template-columns: repeat(1, 1fr); } }
+
+    /* --- Company cards --- */
+    .card {
+      position: relative;
+      background: white;
+      border: 2px solid #E9D5FF;
+      border-radius: 14px;
+      padding: 16px 14px;
+      min-height: 130px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 130px;
-      transition: all 0.25s ease;
       cursor: pointer;
-      text-decoration: none;
-      outline: none;
+      transition: all 0.25s ease;
+      overflow: visible;
+      text-align: center;
     }
 
-    .company-card:hover,
-    .company-card:focus-visible {
+    .card:hover {
       border-color: #7C3AED;
-      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
-      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.14);
+      transform: translateY(-2px);
     }
 
-    .company-logo {
-      width: 85px;
-      height: 85px;
+    .logo {
+      width: 64px;
+      height: 64px;
       object-fit: contain;
-      margin-bottom: 14px;
-      filter: grayscale(0%);
+      margin-bottom: 10px;
     }
 
-    .company-logo.fallback {
-      width: 100%;
-      height: 65px;
-      display: flex;
+    .placeholder {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+      border-radius: 10px;
+      display: none;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 12px;
       color: #7C3AED;
-      text-align: center;
-      line-height: 1.3;
-      padding: 10px;
-      background: linear-gradient(
-        135deg,
-        rgba(124, 58, 237, 0.05) 0%,
-        rgba(167, 139, 250, 0.05) 100%
-      );
-      border-radius: 8px;
+      font-weight: 700;
+      padding: 8px;
+      line-height: 1.2;
     }
 
-    .company-name {
+    .name {
       font-size: 13px;
+      font-weight: 600;
       color: #374151;
-      text-align: center;
-      font-weight: 500;
-      line-height: 1.3;
-      word-wrap: break-word;
-      max-width: 100%;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 12px);
+      transform: translateX(-50%);
+      width: 360px;
+      max-width: 520px;
+      background: rgba(17, 24, 39, 0.95);
+      color: white;
+      padding: 14px 14px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.35;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: 9999;
+      text-align: left;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: rgba(17, 24, 39, 0.95) transparent transparent transparent;
+    }
+
+    .card:hover .tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .tooltip h4 {
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .tooltip .content {
+      opacity: 0.95;
+      max-height: 220px;
+      overflow: auto;
+      white-space: normal;
     }
 
     .footer {
@@ -170,337 +275,309 @@
       border-top: 2px solid #f0f0f0;
     }
 
-    .stats { margin-bottom: 25px; }
+    .footer-branding { font-size: 14px; color: #9ca3af; }
 
-    .stats-number {
-      font-size: 56px;
-      font-weight: 700;
-      color: #7C3AED;
-      margin-bottom: 10px;
-    }
-
-    .stats-label {
-      font-size: 16px;
-      color: #6b7280;
-      font-weight: 500;
-    }
-
-    .footer-branding {
-      font-size: 14px;
-      color: #9ca3af;
-      margin-top: 20px;
-    }
-
-    @media print {
-      body { padding: 20px; }
-      .category-section { page-break-inside: avoid; }
-      .company-card { box-shadow: none !important; transform: none !important; }
-    }
-
-    /* Purple gradient variations */
-    .category-section:nth-child(1) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%); }
-    .category-section:nth-child(2) .category-header { background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 100%); }
-    .category-section:nth-child(3) .category-header { background: linear-gradient(135deg, #9333EA 0%, #D8B4FE 100%); }
-    .category-section:nth-child(4) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #C4B5FD 100%); }
-    .category-section:nth-child(5) .category-header { background: linear-gradient(135deg, #6D28D9 0%, #A78BFA 100%); }
-    .category-section:nth-child(6) .category-header { background: linear-gradient(135deg, #8B5CF6 0%, #DDD6FE 100%); }
-    .category-section:nth-child(7) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #E9D5FF 100%); }
+    @media print { body { padding: 20px; } }
   </style>
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>Shane Wilson for Ibex: Winter 2026 Market Map</h1>
-      <div class="subtitle">107 Target Companies Across Industrial &amp; Logistics Verticals</div>
+      <h1 id="page-title">Shane Wilson for Ibex: Winter 2026 Market Map</h1>
+      <div class="subtitle" id="page-subtitle">Landscape of relevant companies, grouped by category</div>
+
+      <div class="nav-links">
+        <a class="active" href="index.html">Market Map</a>
+        <a href="sales_funnel.html">Deal Flow →</a>
+      </div>
     </div>
 
-    <div class="nav-links">
-      <a class="active" href="index.html">Market Map</a>
-      <a href="sales_funnel.html">Deal Flow</a>
+    <div id="status" class="status">
+      <strong>Loading data</strong>
+      <div class="muted">If this hangs, the endpoint URL is wrong or blocked.</div>
     </div>
 
-    <div id="market-map"></div>
+    <div class="controls">
+      <div class="search">
+        <input id="search" type="text" placeholder="Search companies (name, about, category)" />
+      </div>
+      <div class="pillbar" id="pillbar"></div>
+    </div>
+
+    <div id="sections"></div>
 
     <div class="footer">
-      <div class="stats">
-        <div class="stats-number" id="total-companies">107</div>
-        <div class="stats-label" id="total-label">Companies Mapped Across 9 Categories</div>
-      </div>
-      <div class="footer-branding">© 2026 IBEX Investors, Inc. | Winter 2026</div>
+      <div class="footer-branding" id="footer-text">© 2026 IBEX Investors, Inc. | Winter 2026</div>
     </div>
   </div>
 
   <script>
-    // Manual logo overrides when PitchBook links are profile pages (not direct images), or when you want a specific asset.
-    const LOGO_OVERRIDES = {
-      "Belli (Business/Productivity Software)": "https://image.pitchbook.com/xWE2mipZ6E676ujSc53MKbckesyJb1762924006728_50x50"
+    const CONFIG = {
+      endpointBase: "https://script.google.com/macros/s/AKfycbzrHCcoWxGkVJ96Q-D-IZb-NAX58ONk9vJinZB5avr1TvOLbeW-ToFUQ3e5hDbfGZB_/exec",
+      view: "marketmap",
+
+      pageTitle: "Shane Wilson for Ibex: Winter 2026 Market Map",
+      pageSubtitle: "Landscape of relevant companies, grouped by category",
+      footerText: "© 2026 IBEX Investors, Inc. | Winter 2026"
     };
 
-    function normalizeDomain(url) {
-      if (!url) return "";
-      let u = String(url).trim();
-      u = u.replace(/^https?:\/\//i, "");
-      u = u.replace(/^www\./i, "");
-      u = u.split("/")[0];
-      return u;
+    function $(id) { return document.getElementById(id); }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    function isProbablyImageUrl(url) {
-      if (!url) return false;
-      const u = String(url).trim();
-      if (!/^https?:\/\//i.test(u)) return false;
-      if (u.includes("my.pitchbook.com/profile")) return false;
-      return true;
+    function setStatus(type, title, details) {
+      const el = $("status");
+      el.className = "status " + (type || "");
+      el.innerHTML = `<strong>${escapeHtml(title)}</strong>${details ? `<div class="muted">${escapeHtml(details)}</div>` : ""}`;
     }
 
-    function resolveLogo(company) {
-      const name = company["Company Name"] || "";
-      if (LOGO_OVERRIDES[name]) return LOGO_OVERRIDES[name];
-
-      const raw = (company["Logo link"] || "").toString().trim();
-      if (isProbablyImageUrl(raw)) return raw;
-
-      const domain = normalizeDomain(company["Url"] || "");
-      if (domain) return "https://logo.clearbit.com/" + domain;
-
-      return "";
+    function safeOpen(url) {
+      if (!url) return;
+      try {
+        const u = new URL(url, window.location.href);
+        window.open(u.href, "_blank", "noopener,noreferrer");
+      } catch (e) {}
     }
 
-    const marketMapData = {
-      "Asset Visibility, Monitoring, and Risk": [
-        {"Company Name":"Bluicity","Logo link":"https://image.pitchbook.com/1yNvpGxbgNWhhOXgHMMOOuwBEv01699443127818_110x110","Url":"www.bluicity.com"},
-        {"Company Name":"Cerebrum (Software)","Logo link":"https://image.pitchbook.com/ccPluPufYaxx5Si9Ji2IySzvchD1641582493677_110x110","Url":"www.cerebrumsensor.com"},
-        {"Company Name":"Innovate-Ops","Logo link":"https://image.pitchbook.com/xd0ANWwu0Mhy8Gn7WZqcHkyOqgA1754503871998_110x110","Url":"innovate-ops.com"},
-        {"Company Name":"Mentium","Logo link":"https://image.pitchbook.com/zZB39nNOmrk83aiSd6Q8oOPupgj1755750069568_110x110","Url":"www.mentium.io"},
-        {"Company Name":"Takt (Business/Productivity Software)","Logo link":"https://image.pitchbook.com/iaWb1xwL54NHSjBSFYqvmp5SVJ71762351798729_110x110","Url":"www.takt.io"},
-        {"Company Name":"Transparent Path","Logo link":"https://image.pitchbook.com/a0UhxLXnGb8jcmddsUtLLeOv8az1764170499926_110x110","Url":"www.transparentpath.com"},
-        {"Company Name":"kimaru.ai","Logo link":"https://image.pitchbook.com/1UULOtinXZpgArPsRlxL7YwiuiH1728284242842_110x110","Url":"kimaru.ai"}
-      ],
-      "Autonomy, Perception, Robotics": [
-        {"Company Name":"Advex AI","Logo link":"https://image.pitchbook.com/NgXoiIlzVfBoQ3Y1fP8s3x3ea4m1769441472046_110x110","Url":"www.advexai.com"},
-        {"Company Name":"AndrenaM","Logo link":"https://image.pitchbook.com/7gXmcqbFM0HQwP77fpkXegAeFc2UH1755100205448_50x50","Url":"www.andrenam.com"},
-        {"Company Name":"Autobon AI","Logo link":"https://image.pitchbook.com/SZMcwxBclB8fmgwmrff1hdTbd1r1696335035021_110x110","Url":"www.autobon.ai"},
-        {"Company Name":"BiFrost","Logo link":"https://logo.clearbit.com/www.bifrost.ai","Url":"www.bifrost.ai"},
-        {"Company Name":"Bloom (Detroit)","Logo link":"https://image.pitchbook.com/Yb71rkZ2QP77r9m4KYVVru0shUO1757420382416_110x110","Url":"www.togetherwebloom.us"},
-        {"Company Name":"Chassy","Logo link":"https://image.pitchbook.com/3ovazULhy0Rsnr7zfTt5RuGgeKQ1706718239067_110x110","Url":"www.chassy.io"},
-        {"Company Name":"Clip Automation","Logo link":"https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110","Url":"www.clipautomation.com"},
-        {"Company Name":"Cloneable","Logo link":"https://image.pitchbook.com/OP6wE5LDKJ5hxRdvBfIPz7IWmSr1732170038063_110x110","Url":"www.cloneable.ai"},
-        {"Company Name":"Dataviva","Logo link":"https://image.pitchbook.com/NWx3DmIGAnS3275WjxWn24b490G1683701119977_110x110","Url":"www.dataviva.com"},
-        {"Company Name":"Et Cetera Robotics","Logo link":"https://image.pitchbook.com/tKI4T5qVtZvMR0BJcuBZ5AVRoVJ1765532937635_110x110","Url":"www.etcrobotics.com"},
-        {"Company Name":"GemaTEG","Logo link":"https://image.pitchbook.com/UmxE6aKgmTOaOvXDzrLtzZXdRT31740678173101_110x110","Url":"www.gemateg.com"},
-        {"Company Name":"Heft IQ","Logo link":"https://image.pitchbook.com/jre7Mt3Ln4IfeSrVkSrZF6xljZO1747633915184_110x110","Url":"www.heftiq.com"},
-        {"Company Name":"Kestrel (Aerospace and Defense)","Logo link":"https://image.pitchbook.com/30DTgoFTUHlG0vKECjlVtkrKJoF1763392996018_110x110","Url":"www.kestrelintelligence.com"},
-        {"Company Name":"Motoring Labs","Logo link":"https://image.pitchbook.com/u8OBVPVSWz71TKMRVwLDonNNO3O1682339730116_110x110","Url":"www.trymotoring.com"},
-        {"Company Name":"Nexera Robotics","Logo link":"https://image.pitchbook.com/01aoMJ38q8Z6wW6wymXyZssItQWLL1740655501735_50x50","Url":"www.nexera-robotics.com"},
-        {"Company Name":"Pitch Aeronautics","Logo link":"https://image.pitchbook.com/qAeEoqelOMyCiF63p70kPpGfKyZ1706020650285_110x110","Url":"www.pitchaero.com"},
-        {"Company Name":"Railspire","Logo link":"https://image.pitchbook.com/5495PoerU92Ia2FqvkqlfSjgFpq1736867732128_110x110","Url":"www.railspire.com"},
-        {"Company Name":"Reflex Robotics","Logo link":"https://image.pitchbook.com/pJLTPeBwysxl8Ku7SzBnahWlMMu7H1753337788435_50x50","Url":"www.reflexrobotics.com"},
-        {"Company Name":"Roboto","Logo link":"https://logo.clearbit.com/www.roboto.ai","Url":"http://www.roboto.ai/"},
-        {"Company Name":"Tessera Labs","Logo link":"https://image.pitchbook.com/8yR92a6rzJMP1NWQ013h9NfrJXy1765788933951_110x110","Url":"www.tesseralabs.ai"},
-        {"Company Name":"Two Boxes","Logo link":"https://image.pitchbook.com/ga3WejbDjqvx6dyuK1fM017rdOC1762512494085_110x110","Url":"www.twoboxes.com"},
-        {"Company Name":"Waveye","Logo link":"https://image.pitchbook.com/FDbkzZnIQrPs1BJNgGA1fWLaiJs1706608275422_110x110","Url":"http://www.waveye.com/"}
-      ],
-      "Business / Productivity Software": [
-        {"Company Name":"FLIP (Palo Alto)","Logo link":"https://image.pitchbook.com/WQfh83pDspoUt13x4SGOoSGl4kpSq1756917446232_50x50","Url":"www.goflip.ai"},
-        {"Company Name":"GetLeo","Logo link":"https://logo.clearbit.com/www.getleo.ai","Url":"www.getleo.ai"},
-        {"Company Name":"Unbane","Logo link":"https://image.pitchbook.com/8E2xGPNNNiVhrVlWyXhy96dX6ZlsN1764751791302_50x50","Url":"www.unbane.com"},
-        {"Company Name":"Zoo","Logo link":"https://image.pitchbook.com/2fSREfDtTzHgWECy9rM11KypcWKFn1768900051721_50x50","Url":"www.zoo.dev"}
-      ],
-      "Energy and Industrial Infrastructure": [
-        {"Company Name":"ePropelled","Logo link":"https://image.pitchbook.com/mXgcAVzhoI2lvEb1w2Id8H7NtaehF1747243500865_50x50","Url":"www.epropelled.com"}
-      ],
-      "Industrial Automation and Manufacturing": [
-        {"Company Name":"Altitude AI","Logo link":"https://image.pitchbook.com/RhWbWET4arBIRJtAj9GsnNXYHIA1756893567825_110x110","Url":"www.getaltitudeai.com"},
-        {"Company Name":"Anvil Robotics","Logo link":"https://image.pitchbook.com/IfozbplJaNGfLPP4xp2sIzBgp101764164852553_110x110","Url":"www.anvil.bot"},
-        {"Company Name":"Anyware Robotics","Logo link":"https://logo.clearbit.com/www.anyware-robotics.com","Url":"www.anyware-robotics.com"},
-        {"Company Name":"Arvist","Logo link":"https://image.pitchbook.com/b1zZrANE2hT7VQnZLPEOxWozhgQSq1755153903931_50x50","Url":"www.arvist.ai"},
-        {"Company Name":"AutoScheduler.AI","Logo link":"https://image.pitchbook.com/rVDnnJg02XeKI1tYmw5dxi6McWh1753688250073_110x110","Url":"www.autoscheduler.ai"},
-        {"Company Name":"CUBE","Logo link":"https://image.pitchbook.com/IOJWunGhzR3C3oqLxV5jfcTr8L31733722028418_110x110","Url":"www.getcube.ai"},
-        {"Company Name":"Cartesian Kinetics","Logo link":"https://image.pitchbook.com/T1OdgSRmpzCvCsaEDeUco2e82nj1742281241040_110x110","Url":"www.cartesiankinetics.com"},
-        {"Company Name":"Contoro Robotics","Logo link":"https://logo.clearbit.com/www.contoro.com","Url":"www.contoro.com"},
-        {"Company Name":"Demandly","Logo link":"https://image.pitchbook.com/NaOpCpKHqjfSTDTovOh7dYc8p4R1730976329371_110x110","Url":"www.demandly.com"},
-        {"Company Name":"Destro AI","Logo link":"https://image.pitchbook.com/VF7WFt5E3pOsiUdph9vaYxhi3Eg1764253027710_110x110","Url":"www.destroai.com"},
-        {"Company Name":"Deterrence","Logo link":"https://image.pitchbook.com/HEyNJyd8Es17ILpgpUgDbHyGQ27T81735833507305_50x50","Url":"www.deterrence.com"},
-        {"Company Name":"Dockware","Logo link":"https://image.pitchbook.com/6tuplE96hHOtjaotJYooPM768RS1752144933047_110x110","Url":"www.dockware.ai"},
-        {"Company Name":"Elven Technologies","Logo link":"https://image.pitchbook.com/5iQyFfDbLVbyHm8mPEX4jGTvBh2Og1768216053864_50x50","Url":"www.elventech.net"},
-        {"Company Name":"Foundational Industries","Logo link":"https://image.pitchbook.com/MrPbKDNDCNwWB1yH8h4z8mDDuYr1764923767157_110x110","Url":"www.foundational.industries"},
-        {"Company Name":"FreshX","Logo link":"https://image.pitchbook.com/U71oxn5L37NSTFgEM8lAfNzILif1713874309950_110x110","Url":"getfreshx.com"},
-        {"Company Name":"Haddy","Logo link":"https://my.pitchbook.com/profile/516958-93/company/profile#timeline","Url":"www.haddy.life"},
-        {"Company Name":"Industrial Next","Logo link":"https://image.pitchbook.com/qeBtpGoWqCQCcXXZVkYk7s502qZ1751361285752_110x110","Url":"www.industrialnext.ai"},
-        {"Company Name":"Lanesurf","Logo link":"https://image.pitchbook.com/NE88l1yI9qZXD37YXP0MgBD3uWX1753681082536_110x110","Url":"www.lanesurf.com"},
-        {"Company Name":"Molg","Logo link":"https://image.pitchbook.com/4MudK47LrB1ia7Svpb3Ipi5g7Zyj71728492523069_50x50","Url":"www.molg.ai"},
-        {"Company Name":"Procense","Logo link":"https://image.pitchbook.com/EgZ8xw8tGdi8Ibhvfpf26lSYcDm1758870771974_110x110","Url":"www.procense.ai"}
-      ],
-      "Logistics and Fleet Ops Software": [
-        {"Company Name":"ARIX","Logo link":"https://image.pitchbook.com/n1f0Rn1ihJ7gbb287AvHEarddNr1733739044306_110x110","Url":"www.arix-tech.com"},
-        {"Company Name":"Aavyooh","Logo link":"https://image.pitchbook.com/Ap1BupH1Y6hqBfB1uR7IgQEjcFbfQ1765865653981_50x50","Url":"www.aavyooh.com"},
-        {"Company Name":"AiDEN Auto","Logo link":"https://image.pitchbook.com/yHkShlkpuDsIrbsrhXL7kb5nQLn1739973695704_110x110","Url":"www.aidenauto.com"},
-        {"Company Name":"Alderbuck Energy","Logo link":"https://my.pitchbook.com/profile/687507-31/company/profile","Url":"www.alderbuck.com"},
-        {"Company Name":"Anglera","Logo link":"https://image.pitchbook.com/ROChoFEKVtAzLZlomSsortNA05j5G1748427339385_50x50","Url":"www.anglera.com"},
-        {"Company Name":"Auto Hauler Exchange","Logo link":"https://image.pitchbook.com/FqW0IacscL79hFs4BVs0LStXAgU1736929838503_110x110","Url":"www.autohaulerexchange.com"},
-        {"Company Name":"Belli (Business/Productivity Software)","Logo link":"https://my.pitchbook.com/profile/639649-36/company/profile#ai-summary","Url":"www.belli.ai"},
-        {"Company Name":"FluxWorks","Logo link":"https://image.pitchbook.com/QUO6hbngnPcX2ErSnZOmrUbI6l01755687591284_110x110","Url":"www.fluxworks.co"},
-        {"Company Name":"G2Mint","Logo link":"https://image.pitchbook.com/02N8ghSJFPqUvslCsSSYxluE5no1755836889926_110x110","Url":"www.g2mint.com"},
-        {"Company Name":"H+Trace","Logo link":"https://image.pitchbook.com/F67qU6aPdIFHird5LVyAsyf4RcVp71750851554253_50x50","Url":"www.h-trace.com"},
-        {"Company Name":"IronGrid","Logo link":"https://image.pitchbook.com/ucbMxiQV0m3CzLQa7HqAVcKlGIp1754393642214_110x110","Url":"www.getirongrid.com"},
-        {"Company Name":"Nearfleet","Logo link":"https://image.pitchbook.com/HrbM6wbLCHecnUBFcB8jcb7WKq81706529260652_110x110","Url":"www.nearfleet.com"},
-        {"Company Name":"Onward Delivery","Logo link":"https://image.pitchbook.com/89YeWyuObnNLL7FbRjimD1dM9wD1670566415302_110x110","Url":"www.onwarddelivery.com"},
-        {"Company Name":"Podium Automation","Logo link":"https://image.pitchbook.com/lrR5nnZBkXru5lQV4PiuAmRnhwF1732629890165_110x110","Url":"www.podiumautomation.com"},
-        {"Company Name":"Pulse Charter Connect","Logo link":"https://my.pitchbook.com/profile/534906-55/company/profile#timeline","Url":"www.pulsecharterconnect.com"},
-        {"Company Name":"RailPulse","Logo link":"https://image.pitchbook.com/QY5UzTsP59iIoxi3Jiug3TCAS06Uj1730701167642_50x50","Url":"www.railpulse.com"},
-        {"Company Name":"Reform (Business/Productivity Software)","Logo link":"https://image.pitchbook.com/sR1aKBconGcu1WFOxjqOlRy4sHL1745559604884_110x110","Url":"www.reformhq.com"},
-        {"Company Name":"Ruck Intergalactic","Logo link":"https://image.pitchbook.com/0BLJrLKkHn9sjdv2hlUgH9gPRQe1750067761187_110x110","Url":"www.ruck.com"},
-        {"Company Name":"SCIP","Logo link":"https://image.pitchbook.com/I6MqaBVkvv5xwygiuYwoQ5MGkMS1747381791282_110x110","Url":"www.myscip.com"},
-        {"Company Name":"Ship Angel","Logo link":"https://image.pitchbook.com/cRjuI0Lp7OZ3RT2LHayRh8Ldhixu41760935833282_50x50","Url":"www.shipangel.com"},
-        {"Company Name":"Singuli","Logo link":"https://image.pitchbook.com/a0JOF3dpFgfDATAf848fKpee5701686910371101_110x110","Url":"www.singuli.co"},
-        {"Company Name":"Tavoro","Logo link":"https://image.pitchbook.com/oTboJNQkE3QF776Rm2IzvesKuKp1686039729178_110x110","Url":"www.tavoro.com"},
-        {"Company Name":"Triple Axle","Logo link":"https://image.pitchbook.com/LX3VDtY3g8wXJh5ndH9tCa4fv771711027438679_110x110","Url":"www.tripleaxle.com"},
-        {"Company Name":"Velostics","Logo link":"https://image.pitchbook.com/wEJmwI3VEZ6lJ2pd5NIPjufTF601696566598511_110x110","Url":"www.velostics.com"},
-        {"Company Name":"Warehowz","Logo link":"https://image.pitchbook.com/BIUTEgRQ8E5Cc9SyrXYwBmwZNJ91695029425654_110x110","Url":"www.warehowz.com"},
-        {"Company Name":"XY Retail","Logo link":"https://image.pitchbook.com/P92R3O4tGpBVjDJXfPMcMOudODQ1646222865130_110x110","Url":"www.xyretail.com"},
-        {"Company Name":"gatein.ai","Logo link":"https://image.pitchbook.com/favicon/gatein-ai.png","Url":"gatein.ai"}
-      ],
-      "Marketplaces and Industrial Commerce": [
-        {"Company Name":"Azalea Robotics","Logo link":"https://image.pitchbook.com/ANNYzmQCTsCGmkXifztEiicebjP1725441471727_110x110","Url":"www.azalearobotics.com"},
-        {"Company Name":"Chain.io","Logo link":"https://image.pitchbook.com/J1NFr3p2PUIBRfQAMU1HlY9hSZb1652965490073_110x110","Url":"www.chain.io"},
-        {"Company Name":"Journey Robotics","Logo link":"https://image.pitchbook.com/PS7flQXGGzXUMvt48pfvwQtSp9X1720434771090_110x110","Url":"www.journeyrobotics.com"},
-        {"Company Name":"Resin8","Logo link":"https://image.pitchbook.com/lZiKImjjkZadrPtR9WZbDq9vFzQ1748971555246_110x110","Url":"www.resin8.ai"},
-        {"Company Name":"Stock","Logo link":"https://image.pitchbook.com/53dh05Wv1RW5qjayub0g2CbTGc21756899604266_110x110","Url":"www.stockitbetter.com"}
-      ],
-      "Supply Chain Planning and Decision Intelligence": [
-        {"Company Name":"Blaise Transit","Logo link":"https://image.pitchbook.com/NmYLuFYMsl0Nwpme6E0VbC9aHEq1684413629846_110x110","Url":"www.blaisetransit.com"},
-        {"Company Name":"Capoom","Logo link":"https://logo.clearbit.com/www.capoom.com","Url":"www.capoom.com"},
-        {"Company Name":"Dryft AI","Logo link":"https://image.pitchbook.com/BmmZQnKakCwMJYnIBGM1M22fWqw1763095142855_110x110","Url":"www.dryft.ai"},
-        {"Company Name":"Flywheel AI","Logo link":"https://image.pitchbook.com/WHIUQB0KHKtdSMvN1p52ThdGPdr1758877238437_110x110","Url":"www.useflywheel.ai"},
-        {"Company Name":"General Trajectory","Logo link":"https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110","Url":"www.generaltrajectory.com"},
-        {"Company Name":"Kilsar","Logo link":"https://image.pitchbook.com/MchR2xt4mjPGFLJzMfzEqgBwKl21752726300951_110x110","Url":"www.kilsar.com"},
-        {"Company Name":"Kipo AI","Logo link":"https://image.pitchbook.com/w4nhJERQkZNms3fkf0wjibKiRjKZr1717416524076_50x50","Url":"www.kipo.ai"},
-        {"Company Name":"SG Labs","Logo link":"https://image.pitchbook.com/RxTQray1tNjpzfNcWsiAmmC9sY51734678461639_110x110","Url":"qicscan.ai"},
-        {"Company Name":"SolidIntel","Logo link":"https://my.pitchbook.com/profile/588958-93/company/profile#general-info","Url":"www.solidintel.com"},
-        {"Company Name":"TrueNorth","Logo link":"https://image.pitchbook.com/lMdyQMc1tSsavHxcekTyndDG5R51685451895008_110x110","Url":"http://www.truenorth.com/"},
-        {"Company Name":"Vadar Alpha","Logo link":"https://image.pitchbook.com/s5kfhgcChMVgkCXynzf7WAeVCs8Er1766999996985_50x50","Url":"www.vadaralpha.com"},
-        {"Company Name":"Vooma","Logo link":"https://image.pitchbook.com/9SyJIuuxGOFYWiPfP9UuTZr2dS31733153439437_110x110","Url":"www.vooma.com"},
-        {"Company Name":"supplier.io","Logo link":"https://image.pitchbook.com/Nl7VyQRBmbc7EvdrwGfNBwXRuz2xc1687268487128_50x50","Url":"www.supplier.io"}
-      ],
-      "Vehicle Platforms": [
-        {"Company Name":"Amos Power","Logo link":"https://image.pitchbook.com/h68BnzxM4dO7cUPIMuyaIgfeTxU1751884254791_110x110","Url":"www.amospower.com"},
-        {"Company Name":"Datatruck","Logo link":"https://image.pitchbook.com/Q4Z4YrME6An0BJaockwpzNs2nJk1769612326454_110x110","Url":"www.datatruck.io"},
-        {"Company Name":"FireSwarm Solutions","Logo link":"https://image.pitchbook.com/KvwKZX8HzB3ASnCEI0CkK1xSVlD1747630413159_110x110","Url":"www.fireswarmsolutions.com"},
-        {"Company Name":"Launchpad","Logo link":"https://image.pitchbook.com/z57wf8ttCqSKwWBSecZNKdAqqyk1760538042761_110x110","Url":"www.launchpad.build"},
-        {"Company Name":"Salin 247","Logo link":"https://image.pitchbook.com/j7YUUcaevTUJO8BT2Qk0mWjjI0R1677564816912_110x110","Url":"salin247.com"},
-        {"Company Name":"Seaflight Technologies","Logo link":"https://image.pitchbook.com/L2PwNGq3GQd2qSauVaLHM57Pg2E1738070689369_110x110","Url":"www.seaflight.tech"},
-        {"Company Name":"Terraline","Logo link":"https://image.pitchbook.com/MN6vLoPVSsEbDVFkuzpP3psvmPa1673602241530_110x110","Url":"terraline.io"}
-      ]
-    };
+    function slugify(s) {
+      return String(s || "")
+        .toLowerCase()
+        .trim()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
 
-   function safeUrl(raw) {
-  if (!raw) return "#";
-  let url = String(raw).trim();
+    function loadJsonp(url, callbackName) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = url;
+        script.async = true;
 
-  if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    url = "https://" + url;
-  }
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("JSONP request timed out"));
+        }, 15000);
 
-  return url;
-}
-    function createLogoNode(company) {
-      const wrap = document.createElement("div");
-      const logoUrl = resolveLogo(company);
+        function cleanup() {
+          clearTimeout(timeout);
+          script.remove();
+          try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+        }
 
-      if (!logoUrl) {
-        const fallback = document.createElement("div");
-        fallback.className = "company-logo fallback";
-        fallback.textContent = company["Company Name"] || "";
-        wrap.appendChild(fallback);
-        return wrap;
-      }
+        window[callbackName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("Failed to load JSONP script"));
+        };
+
+        document.head.appendChild(script);
+      });
+    }
+
+    function makePill(text, href, isActive) {
+      const a = document.createElement("a");
+      a.className = "pill" + (isActive ? " active" : "");
+      a.href = href;
+      a.textContent = text;
+      return a;
+    }
+
+    function makeCard(company, category) {
+      const name = String(company["Company Name"] || "").trim() || "Unknown";
+      const url = String(company["Url"] || "").trim();
+      const logo = String(company["Logo link"] || "").trim();
+      const about = String(company["About"] || "").trim();
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", name);
+
+      card.addEventListener("click", () => safeOpen(url));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          safeOpen(url);
+        }
+      });
 
       const img = document.createElement("img");
-      img.className = "company-logo";
-      img.src = logoUrl;
-      img.alt = company["Company Name"] || "";
+      img.className = "logo";
+      img.alt = name;
+      img.src = logo || "";
+      img.style.display = logo ? "block" : "none";
 
-      img.onerror = function () {
-        img.remove();
-        const fallback = document.createElement("div");
-        fallback.className = "company-logo fallback";
-        fallback.textContent = company["Company Name"] || "";
-        wrap.appendChild(fallback);
+      const placeholder = document.createElement("div");
+      placeholder.className = "placeholder";
+      placeholder.style.display = logo ? "none" : "flex";
+      placeholder.textContent = name;
+
+      img.onerror = () => {
+        img.style.display = "none";
+        placeholder.style.display = "flex";
       };
 
-      wrap.appendChild(img);
-      return wrap;
-    }
+      const title = document.createElement("div");
+      title.className = "name";
+      title.textContent = name;
 
-    function createCompanyCard(company) {
-      const card = document.createElement("a");
-      card.className = "company-card";
-      card.href = safeUrl(company.Url);
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
+      const tooltip = document.createElement("div");
+      tooltip.className = "tooltip";
 
-      card.appendChild(createLogoNode(company));
+      const h4 = document.createElement("h4");
+      h4.textContent = name;
 
-      const name = document.createElement("div");
-      name.className = "company-name";
-      name.textContent = company["Company Name"] || "";
-      card.appendChild(name);
+      const content = document.createElement("div");
+      content.className = "content";
+      const text = about ? about : "No description available.";
+      content.innerHTML = escapeHtml(text).replaceAll("\n", "<br>");
+
+      tooltip.appendChild(h4);
+      tooltip.appendChild(content);
+
+      card.appendChild(img);
+      card.appendChild(placeholder);
+      card.appendChild(title);
+      card.appendChild(tooltip);
 
       return card;
     }
 
-    function createCategorySection(categoryName, companies) {
-      const section = document.createElement("div");
-      section.className = "category-section";
+    function render(payload) {
+      const mm = payload.marketMapData || {};
+      const categories = Object.keys(mm);
 
-      const header = document.createElement("div");
-      header.className = "category-header";
+      // Controls
+      const pillbar = $("pillbar");
+      pillbar.innerHTML = "";
 
-      const title = document.createElement("div");
-      title.className = "category-title";
-      title.textContent = categoryName;
+      pillbar.appendChild(makePill("All", "#all", true));
+      for (const cat of categories) {
+        pillbar.appendChild(makePill(cat, "#" + slugify(cat), false));
+      }
 
-      const count = document.createElement("div");
-      count.className = "category-count";
-      count.textContent = `${companies.length} companies`;
+      // Sections
+      const sections = $("sections");
+      sections.innerHTML = "";
 
-      header.appendChild(title);
-      header.appendChild(count);
+      for (const cat of categories) {
+        const items = Array.isArray(mm[cat]) ? mm[cat] : [];
+        const section = document.createElement("div");
+        section.className = "section";
+        section.id = slugify(cat);
 
-      const grid = document.createElement("div");
-      grid.className = "companies-grid";
-      companies.forEach((c) => grid.appendChild(createCompanyCard(c)));
+        const header = document.createElement("div");
+        header.className = "section-header";
 
-      section.appendChild(header);
-      section.appendChild(grid);
+        const title = document.createElement("div");
+        title.className = "section-title";
+        title.textContent = cat;
 
-      return section;
+        const count = document.createElement("div");
+        count.className = "section-count";
+        count.textContent = items.length + " companies";
+
+        header.appendChild(title);
+        header.appendChild(count);
+
+        const grid = document.createElement("div");
+        grid.className = "grid";
+
+        items.forEach(c => grid.appendChild(makeCard(c, cat)));
+
+        section.appendChild(header);
+        section.appendChild(grid);
+        sections.appendChild(section);
+      }
+
+      // Search filtering
+      const search = $("search");
+      const doFilter = () => {
+        const q = search.value.trim().toLowerCase();
+        const allSections = sections.querySelectorAll(".section");
+
+        allSections.forEach(sec => {
+          const cards = sec.querySelectorAll(".card");
+          let visible = 0;
+
+          cards.forEach(card => {
+            const name = (card.querySelector(".name")?.textContent || "").toLowerCase();
+            const tip = (card.querySelector(".tooltip .content")?.textContent || "").toLowerCase();
+            const cat = (sec.querySelector(".section-title")?.textContent || "").toLowerCase();
+
+            const ok = !q || name.includes(q) || tip.includes(q) || cat.includes(q);
+            card.style.display = ok ? "" : "none";
+            if (ok) visible++;
+          });
+
+          sec.style.display = visible ? "" : "none";
+          const countEl = sec.querySelector(".section-count");
+          if (countEl) countEl.textContent = visible + " companies";
+        });
+      };
+
+      search.addEventListener("input", doFilter);
+
+      // Hash navigation highlighting
+      function setActivePill() {
+        const hash = (location.hash || "#all").replace("#", "");
+        const pills = pillbar.querySelectorAll(".pill");
+        pills.forEach(p => p.classList.remove("active"));
+
+        const target = Array.from(pills).find(p => (p.getAttribute("href") || "") === "#" + hash);
+        (target || pills[0])?.classList.add("active");
+      }
+
+      window.addEventListener("hashchange", setActivePill);
+      setActivePill();
     }
 
-    function computeTotals(data) {
-      const categories = Object.keys(data).length;
-      let companies = 0;
-      Object.values(data).forEach((arr) => (companies += (arr || []).length));
-      return { categories, companies };
+    async function load() {
+      $("page-title").textContent = CONFIG.pageTitle;
+      $("page-subtitle").textContent = CONFIG.pageSubtitle;
+      $("footer-text").textContent = CONFIG.footerText;
+
+      setStatus("", "Loading data", "Fetching from Apps Script (JSONP)");
+
+      const cbName = "handleMarketMapPayload_" + Math.random().toString(16).slice(2);
+      const url = `${CONFIG.endpointBase}?view=${encodeURIComponent(CONFIG.view)}&callback=${encodeURIComponent(cbName)}&t=${Date.now()}`;
+
+      let payload;
+      try {
+        payload = await loadJsonp(url, cbName);
+      } catch (err) {
+        setStatus("error", "Failed to load data", String(err));
+        return;
+      }
+
+      if (!payload || payload.ok !== true) {
+        const msg = payload && payload.error ? payload.error : "Unknown error";
+        setStatus("error", "Endpoint returned an error", msg);
+        return;
+      }
+
+      render(payload);
+
+      const ts = String(payload?.meta?.timestamp || "");
+      const rows = String(payload?.meta?.rows ?? "");
+      setStatus("ok", "Loaded successfully", `Rows: ${rows}. Timestamp: ${ts}`);
     }
 
-    function renderMarketMap() {
-      const container = document.getElementById("market-map");
-      container.innerHTML = "";
-
-      Object.entries(marketMapData).forEach(([category, companies]) => {
-        container.appendChild(createCategorySection(category, companies));
-      });
-
-      const totals = computeTotals(marketMapData);
-      const totalEl = document.getElementById("total-companies");
-      const labelEl = document.getElementById("total-label");
-      if (totalEl) totalEl.textContent = String(totals.companies);
-      if (labelEl) labelEl.textContent = `Companies Mapped Across ${totals.categories} Categories`;
-    }
-
-    document.addEventListener("DOMContentLoaded", renderMarketMap);
+    load();
   </script>
 </body>
 </html>
