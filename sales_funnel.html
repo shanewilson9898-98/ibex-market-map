@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shane Wilson for Ibex: Winter 2026 Deal Flow</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
       background: #ffffff;
       padding: 50px 30px;
     }
@@ -56,10 +56,27 @@
     .nav-links a:hover { background: #7C3AED; color: white; }
     .nav-links a.active { background: #7C3AED; color: white; }
 
+    /* --- Status / errors --- */
+    .status {
+      max-width: 980px;
+      margin: 0 auto 20px auto;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      background: #fafafa;
+      color: #374151;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .status strong { color: #111827; }
+    .status.error { border-color: #fecaca; background: #fff1f2; color: #991b1b; }
+    .status.ok { border-color: #d1fae5; background: #ecfdf5; color: #065f46; }
+    .status .muted { color: #6b7280; }
+
     /* --- Funnel --- */
     .funnel-wrapper {
       max-width: 820px;
-      margin: 50px auto 30px auto;
+      margin: 30px auto 30px auto;
       position: relative;
       z-index: 1;
     }
@@ -243,6 +260,7 @@
       opacity: 0.95;
       max-height: 220px;
       overflow: auto;
+      white-space: normal;
     }
 
     /* --- Metrics --- */
@@ -285,11 +303,12 @@
     @media print { body { padding: 20px; } }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="header">
-      <h1>Shane Wilson for Ibex: Winter 2026 Deal Flow</h1>
-      <div class="subtitle">Evaluation Pipeline &amp; Company Progression</div>
+      <h1 id="page-title">Shane Wilson for Ibex: Winter 2026 Deal Flow</h1>
+      <div class="subtitle" id="page-subtitle">Evaluation Pipeline &amp; Company Progression</div>
     </div>
 
     <div class="nav-links">
@@ -297,212 +316,314 @@
       <a class="active" href="sales_funnel.html">Deal Flow</a>
     </div>
 
+    <div id="status" class="status">
+      <strong>Loading data</strong>
+      <div class="muted">If this hangs, your fetch URL is wrong or blocked by CORS.</div>
+    </div>
+
     <div class="funnel-wrapper">
-      <!-- Stage 1: Contacted -->
       <div class="funnel-stage">
         <div class="stage-1"></div>
         <div class="stage-content">
           <div class="stage-label">Contacted</div>
-          <div class="stage-count">107</div>
+          <div class="stage-count" id="count-contacted">0</div>
         </div>
       </div>
 
-      <!-- Stage 2: Connected -->
       <div class="funnel-stage">
         <div class="stage-2"></div>
         <div class="stage-content">
           <div class="stage-label">Connected</div>
-          <div class="stage-count">14</div>
+          <div class="stage-count" id="count-connected">0</div>
         </div>
       </div>
 
-      <!-- Stage 3: Call Executed -->
       <div class="funnel-stage">
         <div class="stage-3"></div>
         <div class="stage-content">
           <div class="stage-label">Call Executed</div>
-          <div class="stage-count">10</div>
+          <div class="stage-count" id="count-call-executed">0</div>
         </div>
       </div>
     </div>
 
-    <!-- Call Executed Companies -->
-    <div class="diligence-companies">
-      <div class="diligence-card" id="company-1" onclick="window.open('http://www.belli.ai','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/xWE2mipZ6E676ujSc53MKbckesyJb1762924006728_50x50"
-             alt="Belli (Business/Productivity Software)"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Belli (Business/Productivity Software)</div>
-        <div class="diligence-name">Belli (Business/Productivity Software)</div>
-        <div class="tooltip">
-          <h4>Belli (Business/Productivity Software)</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Belli AI is building the infrastructure to digitize air cargo operations, targeting a $20+ billion market with only 1% online penetration. Founder Jeff Pan leveraged his unique airline operations background (McKinsey venture builder turned airline executive) to identify that cargo tech is highly fragmented compared to other aviation sectors dominated by single players. The company uses a Palantir-style forward deployed engineering model to rapidly onboard major carriers like Emirates and Etihad, positioning itself to become the “Amadeus of cargo” - owning the rails for online cargo booking rather than competing as a low-margin marketplace.<br><br>Funding Requirements:<br>- Currently not fundraising (4-year runway)<br>- Planning to raise after two major milestones in mid-2026<br>- Delaware C-Corp with Jeff owning 70% of cap table</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>Unclear how much of their "product" is product vs service. I found Jeff to be evasive on direct questioning and a little strange.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-2" onclick="window.open('http://www.togetherwebloom.us','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/Yb71rkZ2QP77r9m4KYVVru0shUO1757420382416_110x110"
-             alt="Bloom (Detroit)"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Bloom (Detroit)</div>
-        <div class="diligence-name">Bloom (Detroit)</div>
-        <div class="tooltip">
-          <h4>Bloom (Detroit)</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Together We Bloom operates an AI-powered marketplace connecting hardware manufacturers with supply chain partners, focusing on contract assembly, logistics, and manufacturing services for emerging hardware categories like drones, robotics, and clean tech. Founded by Justin Kosmides, who scaled a Brazilian e-bike company globally during COVID and learned firsthand that “unsexy back-of-house decisions” make or break hardware businesses, the company targets the gap between traditional platforms like Alibaba (parts-focused) and the complex reality of scaling hardware production in North America. Their go-to-market centers on monthly SaaS subscriptions ($500-$2,000/month) plus 6-10% take rates on services, targeting companies launching new product lines who need to establish supply chains quickly. If successful at scale, Bloom becomes the default infrastructure layer enabling hardware innovation to move from prototyping to production without the traditional 12-18 month partner selection cycles.<br><br>Funding requirements:<br>-Currently raising $6-8M (expanding from initial $6M target)<br>-Previous funding: $2.1M raised to date, last round at $18M post-money valuation</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>Interesting business idea, I'm challenged to see the potential for VC scale returns based on current GTM motion. Both sides of this marketplace are small. Unimpressive margin capture.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-3" onclick="window.open('http://www.cerebrumsensor.com','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/ccPluPufYaxx5Si9Ji2IySzvchD1641582493677_110x110"
-             alt="Cerebrum (Software)"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Cerebrum (Software)</div>
-        <div class="diligence-name">Cerebrum (Software)</div>
-        <div class="tooltip">
-          <h4>Cerebrum (Software)</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Cerebrum is commercializing the first tire-mounted sensor technology that provides advanced insights beyond pressure monitoring - including tread depth (accurate to 1mm vs TPMS’s 3-4mm), rubber temperature for blowout prediction, and load monitoring. Founded as a 2019 spinoff by tire industry veteran Keith Ferry (16 years experience), the company targets the archaic $6B TPMS market with a $30B smart tire opportunity driven by regulatory tailwinds (Europe now mandates trailer pressure monitoring, DOT pressuring EV companies on wear monitoring). Their hardware-enabled SaaS model serves commercial fleets with proven ROI - 85% of downtime incidents were predicted before occurring through temperature alerts. With 30,000 sensors deployed generating $1.4M revenue (doubling annually) and first OEM partnership launching with Rivian in 2027, Cerebrum positions itself as the inevitable TPMS replacement.<br><br>Funding requirements:<br>-Currently raising $5-7M<br>-Seeking $25M pre-money valuation (continuing from 2023 round)</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Further diligence required.<br><br>There's a real business here ($1.4M in ARR) yet the value-add for customers on top of traditional TPMS sensors needs to be validated. Also, the growth rate is a little slow to feel confident on VC scale returns. Industry partnerships could accelerate this company's trajectory.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-4" onclick="window.open('http://www.elventech.net','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/5iQyFfDbLVbyHm8mPEX4jGTvBh2Og1768216053864_50x50"
-             alt="Elven Technologies"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Elven Technologies</div>
-        <div class="diligence-name">Elven Technologies</div>
-        <div class="tooltip">
-          <h4>Elven Technologies</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Farid Ismayilzada, a serial entrepreneur from Azerbaijan who previously built and exited three companies including GoldenPay (Azerbaijan’s PayPal), discovered a revolutionary fire-resistant composite material at a Georgian startup competition. The material can withstand temperatures up to 2000°C (3600°F) for over 70 minutes, compared to current firefighter suits that fail after 6 seconds. Working with UC Berkeley’s disaster lab, Farid pivoted from firefighter suits to targeting lithium-ion battery fire containment. With an exclusive Tesla PO in hand for delivery in February, the company aims to monopolize battery transportation containers while expanding into automotive enclosures to replace the industry-standard Mica material across EV manufacturers.<br><br>Funding Requirements:<br>-Amount: $5M at $25M valuation (20% dilution)<br>-Previous rounds: $8M equity round, bridge at $15M valuation</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>Materials are traditional no-go for VC per Bill Janeway; this has potential for a good business with Tesla contract. I'm challenged to see venture-scale returns.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-5" onclick="window.open('http://www.haddy.life','_blank')">
-        <img class="diligence-logo"
-             src="https://logo.clearbit.com/www.haddy.life"
-             alt="Haddy"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Haddy</div>
-        <div class="diligence-name">Haddy</div>
-        <div class="tooltip">
-          <h4>Haddy</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Haddy operates AI-powered macro factories that enable rapid, localized manufacturing using large-format 3D printing and robotics. Founded by Jay Rogers (former Marine scout sniper with 20 years manufacturing experience, including founding Local Motors), the company addresses supply chain vulnerabilities and manufacturing reshoring needs exposed by geopolitical tensions and tariff policies. They target large enterprises and defense customers requiring high-mix, low-volume production with 16x more capacity than any other US additive manufacturer.<br><br>Funding requirements:<br>-Series A: $40-60M round launching this week<br>-Valuation: $150-300M range (likely ~$240M)<br>-Looking for 8-digit lead, open to followers</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>Large scale 3D printing is undifferentiated. Unclear what's proprietary from their design ingestion process. Only $1M in revenue against a $225M+ target valuation is a bridge too far.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-6" onclick="window.open('http://innovate-ops.com','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/xd0ANWwu0Mhy8Gn7WZqcHkyOqgA1754503871998_110x110"
-             alt="Innovate-Ops"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Innovate-Ops</div>
-        <div class="diligence-name">Innovate-Ops</div>
-        <div class="tooltip">
-          <h4>Innovate-Ops</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Dennis Kuzmenko founded Innovate Ops to address the massive $1.4 trillion annual losses from unplanned equipment downtime, targeting the fact that only 10% of manufacturing and logistics equipment is currently monitored. The company targets large manufacturing and logistics facilities with their IoT gateway device (“octopus”) that combines multiple sensors with AI-powered analytics.<br><br>Funding Requirements:<br>-Currently raising $1M seed round<br>-$8M pre-money valuation on SAFE</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>Value delivery focus is too far towards building simple sensors. Sensors are a commodity; I'm not seeing how the software + hardware integrates to deliver sufficient differentiation.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-7" onclick="window.open('http://www.resin8.ai','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/lZiKImjjkZadrPtR9WZbDq9vFzQ1748971555246_110x110"
-             alt="Resin8"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Resin8</div>
-        <div class="diligence-name">Resin8</div>
-        <div class="tooltip">
-          <h4>Resin8</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Resin8 went out of business as of 1/1/2026. Shreyar took the call because he's looking for his next opportunity.</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass.<br><br>I introduced Shreyar to 2 Citta Portcos where he may be a fit for growth ops/strategy.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-8" onclick="window.open('http://www.stockitbetter.com','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/53dh05Wv1RW5qjayub0g2CbTGc21756899604266_110x110"
-             alt="Stock"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Stock</div>
-        <div class="diligence-name">Stock</div>
-        <div class="tooltip">
-          <h4>Stock</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Abby Nawrocki is solving the massive waste crisis in e-commerce fulfillment through Stock, a platform that connects 3PLs with excess inventory to nonprofits needing goods. Stock’s model (SaaS integrations, marketplace transactions, and transportation markup) can match inventory in hours versus weeks for traditional liquidators.<br><br>Funding requirements:<br>-Raising $2-2.5 million seed round<br>-2 leads currently in due diligence phase</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Pass for now.<br><br>I really love this Founder and she's tackling a massive problem. The tech is not there yet; orders are being executed via email. Demand needs further validation.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-9" onclick="window.open('http://www.waveye.com/','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/FDbkzZnIQrPs1BJNgGA1fWLaiJs1706608275422_110x110"
-             alt="Waveye"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">Waveye</div>
-        <div class="diligence-name">Waveye</div>
-        <div class="tooltip">
-          <h4>Waveye</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Waveye builds high-resolution radar perception systems for robotics, addressing safety/perception limitations that prevent robots from working safely alongside humans. Radar offers 4D data (3D plus velocity) and penetration through occlusions. GTM focuses on selling complete hardware-software solutions to robotics companies.<br><br>Funding requirements:<br>-Planning $20M seed round sometime in 2026</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Requires further diligence, keep in touch between now and Series A raise mid 2026.<br><br>Radar units command low average prices; monetizing as units alone will be challenging. Full solution capabilities will be critical to margins.</div>
-        </div>
-      </div>
-
-      <div class="diligence-card" id="company-10" onclick="window.open('http://kimaru.ai','_blank')">
-        <img class="diligence-logo"
-             src="https://image.pitchbook.com/1UULOtinXZpgArPsRlxL7YwiuiH1728284242842_110x110"
-             alt="kimaru.ai"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="diligence-placeholder" style="display:none;">kimaru.ai</div>
-        <div class="diligence-name">kimaru.ai</div>
-        <div class="tooltip">
-          <h4>kimaru.ai</h4>
-          <div class="section-title">Call Notes</div>
-          <div class="content">Kimaru is building a decision intelligence platform that uses causal AI world models to automate supply chain planning decisions without hallucination risks. Wedge: manufacturing supply chain planners who need real-time decision support where LLM hallucination is unacceptable.<br><br>Funding Requirements:<br>- Currently raising $3M seed round<br>- $400k raised to date on SAFE</div>
-          <div class="section-title">Decision + Reason</div>
-          <div class="content">Watch list for Seed raise late 2026.<br><br>Promising, but need validation on pilot-to-contract conversion, deployment repeatability, and pricing model clarity.</div>
-        </div>
-      </div>
-    </div>
+    <div class="diligence-companies" id="call-executed-grid"></div>
 
     <div class="metrics-row">
       <div class="metric">
-        <div class="metric-value">9.4%</div>
+        <div class="metric-value" id="metric-connection-rate">0.0%</div>
         <div class="metric-label">Connection Rate</div>
       </div>
       <div class="metric">
-        <div class="metric-value">4.7%</div>
+        <div class="metric-value" id="metric-call-executed-rate">0.0%</div>
         <div class="metric-label">Call Executed Rate</div>
       </div>
     </div>
 
     <div class="footer">
-      <div class="footer-branding">© 2026 IBEX Investors, Inc. | Winter 2026</div>
+      <div class="footer-branding" id="footer-text">© 2026 IBEX Investors, Inc. | Winter 2026</div>
     </div>
   </div>
+
+  <script>
+    /**
+     * =========================
+     * CONFIG (edit this only)
+     * =========================
+     */
+    const CONFIG = {
+      dataUrl: "./data/companies.json",
+
+      // Optional: for display only
+      pageTitle: "Shane Wilson for Ibex: Winter 2026 Deal Flow",
+      pageSubtitle: "Evaluation Pipeline & Company Progression",
+      footerText: "© 2026 IBEX Investors, Inc. | Winter 2026",
+
+      // If your source uses different field names, map them here.
+      // Left side is "canonical name used by this page". Right side is "field in your JSON".
+      fieldMap: {
+        name: "name",
+        category: "category",
+        website: "website",
+        logo: "logo",
+        connected: "connected",
+        callExecuted: "call_executed",
+        callNotes: "call_notes",
+        decision: "decision",
+        reason: "reason"
+      },
+
+      // How to interpret "truthy" flags from the source
+      truthyValues: new Set([1, "1", true, "true", "TRUE", "yes", "YES", "y", "Y"]),
+
+      // Contacted definition:
+      // - "all" means every row in the dataset counts as contacted
+      // - "nonEmptyName" means only rows with name count as contacted
+      contactedMode: "all",
+
+      // Grid settings
+      maxCards: null // e.g. 10 to cap, or null for unlimited
+    };
+
+    /**
+     * =========================
+     * HELPERS
+     * =========================
+     */
+    function $(id) { return document.getElementById(id); }
+
+    function setStatus(type, title, details) {
+      const el = $("status");
+      el.className = "status " + (type || "");
+      el.innerHTML = `<strong>${escapeHtml(title)}</strong>${details ? `<div class="muted">${escapeHtml(details)}</div>` : ""}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normCompany(raw) {
+      const m = CONFIG.fieldMap;
+
+      const get = (canonical) => raw?.[m[canonical]];
+      const toStr = (v) => (v === null || v === undefined) ? "" : String(v);
+
+      const company = {
+        name: toStr(get("name")).trim(),
+        category: toStr(get("category")).trim(),
+        website: toStr(get("website")).trim(),
+        logo: toStr(get("logo")).trim(),
+        connected: get("connected"),
+        callExecuted: get("callExecuted"),
+        callNotes: toStr(get("callNotes")).trim(),
+        decision: toStr(get("decision")).trim(),
+        reason: toStr(get("reason")).trim()
+      };
+
+      return company;
+    }
+
+    function isTruthy(v) {
+      if (typeof v === "string") return CONFIG.truthyValues.has(v.trim());
+      return CONFIG.truthyValues.has(v);
+    }
+
+    function pct(n, d) {
+      if (!d) return "0.0%";
+      const val = (n / d) * 100;
+      return `${val.toFixed(1)}%`;
+    }
+
+    function buildDisplayName(company) {
+      const name = company.name || "Unknown";
+      const cat = company.category ? ` (${company.category})` : "";
+      return `${name}${cat}`;
+    }
+
+    function safeOpen(url) {
+      if (!url) return;
+      try {
+        const u = new URL(url, window.location.href);
+        window.open(u.href, "_blank", "noopener,noreferrer");
+      } catch (e) {
+        // ignore invalid URL
+      }
+    }
+
+    function makeCard(company) {
+      const displayName = buildDisplayName(company);
+      const hasLogo = Boolean(company.logo);
+
+      const card = document.createElement("div");
+      card.className = "diligence-card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", displayName);
+
+      const clickUrl = company.website;
+      card.addEventListener("click", () => safeOpen(clickUrl));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          safeOpen(clickUrl);
+        }
+      });
+
+      // Logo or placeholder
+      const img = document.createElement("img");
+      img.className = "diligence-logo";
+      img.alt = displayName;
+      img.src = hasLogo ? company.logo : "";
+      img.style.display = hasLogo ? "block" : "none";
+
+      const placeholder = document.createElement("div");
+      placeholder.className = "diligence-placeholder";
+      placeholder.style.display = hasLogo ? "none" : "flex";
+      placeholder.textContent = displayName;
+
+      img.onerror = () => {
+        img.style.display = "none";
+        placeholder.style.display = "flex";
+      };
+
+      const nameEl = document.createElement("div");
+      nameEl.className = "diligence-name";
+      nameEl.textContent = displayName;
+
+      const tooltip = document.createElement("div");
+      tooltip.className = "tooltip";
+
+      const h4 = document.createElement("h4");
+      h4.textContent = displayName;
+
+      const callTitle = document.createElement("div");
+      callTitle.className = "section-title";
+      callTitle.textContent = "Call Notes";
+
+      const callContent = document.createElement("div");
+      callContent.className = "content";
+      callContent.innerHTML = escapeHtml(company.callNotes).replaceAll("\n", "<br>");
+
+      const decisionTitle = document.createElement("div");
+      decisionTitle.className = "section-title";
+      decisionTitle.textContent = "Decision + Reason";
+
+      const decisionContent = document.createElement("div");
+      decisionContent.className = "content";
+      const combinedDecision = [
+        company.decision ? company.decision : "",
+        company.reason ? (company.decision ? "\n\n" + company.reason : company.reason) : ""
+      ].join("");
+      decisionContent.innerHTML = escapeHtml(combinedDecision).replaceAll("\n", "<br>");
+
+      tooltip.appendChild(h4);
+      tooltip.appendChild(callTitle);
+      tooltip.appendChild(callContent);
+      tooltip.appendChild(decisionTitle);
+      tooltip.appendChild(decisionContent);
+
+      card.appendChild(img);
+      card.appendChild(placeholder);
+      card.appendChild(nameEl);
+      card.appendChild(tooltip);
+
+      return card;
+    }
+
+    /**
+     * =========================
+     * MAIN
+     * =========================
+     */
+    async function loadAndRender() {
+      // Static display text
+      $("page-title").textContent = CONFIG.pageTitle;
+      $("page-subtitle").innerHTML = CONFIG.pageSubtitle;
+      $("footer-text").textContent = CONFIG.footerText;
+
+      setStatus("", "Loading data", "Fetching companies from " + CONFIG.dataUrl);
+
+      let raw;
+      try {
+        const res = await fetch(CONFIG.dataUrl, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        raw = await res.json();
+      } catch (err) {
+        setStatus("error", "Failed to load data", String(err));
+        return;
+      }
+
+      if (!Array.isArray(raw)) {
+        setStatus("error", "Data format error", "Expected an array of companies. Got: " + typeof raw);
+        return;
+      }
+
+      const companies = raw.map(normCompany);
+
+      // Contacted definition
+      const contacted = (CONFIG.contactedMode === "nonEmptyName")
+        ? companies.filter(c => c.name).length
+        : companies.length;
+
+      const connectedCount = companies.filter(c => isTruthy(c.connected)).length;
+      const callExecutedCompanies = companies.filter(c => isTruthy(c.callExecuted));
+      const callExecutedCount = callExecutedCompanies.length;
+
+      $("count-contacted").textContent = String(contacted);
+      $("count-connected").textContent = String(connectedCount);
+      $("count-call-executed").textContent = String(callExecutedCount);
+
+      $("metric-connection-rate").textContent = pct(connectedCount, contacted);
+      $("metric-call-executed-rate").textContent = pct(callExecutedCount, contacted);
+
+      // Render call executed grid
+      const grid = $("call-executed-grid");
+      grid.innerHTML = "";
+
+      let toRender = callExecutedCompanies;
+      if (typeof CONFIG.maxCards === "number") {
+        toRender = toRender.slice(0, CONFIG.maxCards);
+      }
+
+      if (toRender.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "status";
+        empty.style.gridColumn = "1 / -1";
+        empty.innerHTML = "<strong>No Call Executed companies found</strong><div class='muted'>Check your fieldMap for callExecuted and confirm the source values match truthyValues.</div>";
+        grid.appendChild(empty);
+      } else {
+        toRender.forEach(c => grid.appendChild(makeCard(c)));
+      }
+
+      setStatus("ok", "Loaded successfully", `Companies: ${companies.length}. Connected: ${connectedCount}. Call Executed: ${callExecutedCount}.`);
+    }
+
+    loadAndRender();
+  </script>
 </body>
 </html>
