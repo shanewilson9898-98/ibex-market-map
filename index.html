@@ -394,13 +394,16 @@
       ]
     };
 
-    function safeUrl(u) {
-      const raw = (u || "").toString().trim();
-      if (!raw || raw === "#") return "#";
-      if (/^https?:\/\//i.test(raw)) return raw;
-      return "http://" + raw;
-    }
+   function safeUrl(raw) {
+  if (!raw) return "#";
+  let url = String(raw).trim();
 
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url;
+  }
+
+  return url;
+}
     function createLogoNode(company) {
       const wrap = document.createElement("div");
       const logoUrl = resolveLogo(company);
