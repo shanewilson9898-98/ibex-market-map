@@ -318,7 +318,7 @@
 
     <div id="status" class="status">
       <strong>Loading data</strong>
-      <div class="muted">If this hangs, your fetch URL is wrong or blocked by CORS.</div>
+      <div class="muted">If this hangs, the endpoint URL is wrong or blocked.</div>
     </div>
 
     <div class="funnel-wrapper">
@@ -367,56 +367,23 @@
 
   <script>
     /**
-     * =========================
-     * CONFIG (edit this only)
-     * =========================
+     * CONFIG
+     * - Use JSONP to avoid CORS issues on GitHub Pages.
+     * - Your Apps Script already provides: funnel + callExecutedCompanies
      */
     const CONFIG = {
-      dataUrl: "./data/companies.json",
+      endpointBase: "https://script.google.com/macros/s/AKfycbzrHCcoWxGkVJ96Q-D-IZb-NAX58ONk9vJinZB5avr1TvOLbeW-ToFUQ3e5hDbfGZB_/exec",
+      view: "marketmap",
 
-      // Optional: for display only
       pageTitle: "Shane Wilson for Ibex: Winter 2026 Deal Flow",
       pageSubtitle: "Evaluation Pipeline & Company Progression",
       footerText: "© 2026 IBEX Investors, Inc. | Winter 2026",
 
-      // If your source uses different field names, map them here.
-      // Left side is "canonical name used by this page". Right side is "field in your JSON".
-      fieldMap: {
-        name: "name",
-        category: "category",
-        website: "website",
-        logo: "logo",
-        connected: "connected",
-        callExecuted: "call_executed",
-        callNotes: "call_notes",
-        decision: "decision",
-        reason: "reason"
-      },
-
-      // How to interpret "truthy" flags from the source
-      truthyValues: new Set([1, "1", true, "true", "TRUE", "yes", "YES", "y", "Y"]),
-
-      // Contacted definition:
-      // - "all" means every row in the dataset counts as contacted
-      // - "nonEmptyName" means only rows with name count as contacted
-      contactedMode: "all",
-
-      // Grid settings
-      maxCards: null // e.g. 10 to cap, or null for unlimited
+      // Safety: cap how many cards render (null = unlimited)
+      maxCards: null
     };
 
-    /**
-     * =========================
-     * HELPERS
-     * =========================
-     */
     function $(id) { return document.getElementById(id); }
-
-    function setStatus(type, title, details) {
-      const el = $("status");
-      el.className = "status " + (type || "");
-      el.innerHTML = `<strong>${escapeHtml(title)}</strong>${details ? `<div class="muted">${escapeHtml(details)}</div>` : ""}`;
-    }
 
     function escapeHtml(str) {
       return String(str ?? "")
@@ -427,42 +394,15 @@
         .replaceAll("'", "&#039;");
     }
 
-    function normCompany(raw) {
-      const m = CONFIG.fieldMap;
-
-      const get = (canonical) => raw?.[m[canonical]];
-      const toStr = (v) => (v === null || v === undefined) ? "" : String(v);
-
-      const company = {
-        name: toStr(get("name")).trim(),
-        category: toStr(get("category")).trim(),
-        website: toStr(get("website")).trim(),
-        logo: toStr(get("logo")).trim(),
-        connected: get("connected"),
-        callExecuted: get("callExecuted"),
-        callNotes: toStr(get("callNotes")).trim(),
-        decision: toStr(get("decision")).trim(),
-        reason: toStr(get("reason")).trim()
-      };
-
-      return company;
-    }
-
-    function isTruthy(v) {
-      if (typeof v === "string") return CONFIG.truthyValues.has(v.trim());
-      return CONFIG.truthyValues.has(v);
+    function setStatus(type, title, details) {
+      const el = $("status");
+      el.className = "status " + (type || "");
+      el.innerHTML = `<strong>${escapeHtml(title)}</strong>${details ? `<div class="muted">${escapeHtml(details)}</div>` : ""}`;
     }
 
     function pct(n, d) {
       if (!d) return "0.0%";
-      const val = (n / d) * 100;
-      return `${val.toFixed(1)}%`;
-    }
-
-    function buildDisplayName(company) {
-      const name = company.name || "Unknown";
-      const cat = company.category ? ` (${company.category})` : "";
-      return `${name}${cat}`;
+      return ((n / d) * 100).toFixed(1) + "%";
     }
 
     function safeOpen(url) {
@@ -470,14 +410,21 @@
       try {
         const u = new URL(url, window.location.href);
         window.open(u.href, "_blank", "noopener,noreferrer");
-      } catch (e) {
-        // ignore invalid URL
-      }
+      } catch (e) {}
     }
 
-    function makeCard(company) {
-      const displayName = buildDisplayName(company);
-      const hasLogo = Boolean(company.logo);
+    function buildDisplayName(c) {
+      const name = String(c["Company Name"] || "").trim() || "Unknown";
+      const cat = String(c["Category"] || "").trim();
+      return cat ? `${name} (${cat})` : name;
+    }
+
+    function makeCard(c) {
+      const displayName = buildDisplayName(c);
+      const website = String(c["Url"] || "").trim();
+      const logo = String(c["Logo link"] || "").trim();
+      const callNotes = String(c["Call Notes"] || "").trim();
+      const decision = String(c["Decision And Reason"] || "").trim();
 
       const card = document.createElement("div");
       card.className = "diligence-card";
@@ -485,25 +432,23 @@
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", displayName);
 
-      const clickUrl = company.website;
-      card.addEventListener("click", () => safeOpen(clickUrl));
+      card.addEventListener("click", () => safeOpen(website));
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          safeOpen(clickUrl);
+          safeOpen(website);
         }
       });
 
-      // Logo or placeholder
       const img = document.createElement("img");
       img.className = "diligence-logo";
       img.alt = displayName;
-      img.src = hasLogo ? company.logo : "";
-      img.style.display = hasLogo ? "block" : "none";
+      img.src = logo || "";
+      img.style.display = logo ? "block" : "none";
 
       const placeholder = document.createElement("div");
       placeholder.className = "diligence-placeholder";
-      placeholder.style.display = hasLogo ? "none" : "flex";
+      placeholder.style.display = logo ? "none" : "flex";
       placeholder.textContent = displayName;
 
       img.onerror = () => {
@@ -527,7 +472,7 @@
 
       const callContent = document.createElement("div");
       callContent.className = "content";
-      callContent.innerHTML = escapeHtml(company.callNotes).replaceAll("\n", "<br>");
+      callContent.innerHTML = escapeHtml(callNotes).replaceAll("\n", "<br>");
 
       const decisionTitle = document.createElement("div");
       decisionTitle.className = "section-title";
@@ -535,11 +480,7 @@
 
       const decisionContent = document.createElement("div");
       decisionContent.className = "content";
-      const combinedDecision = [
-        company.decision ? company.decision : "",
-        company.reason ? (company.decision ? "\n\n" + company.reason : company.reason) : ""
-      ].join("");
-      decisionContent.innerHTML = escapeHtml(combinedDecision).replaceAll("\n", "<br>");
+      decisionContent.innerHTML = escapeHtml(decision).replaceAll("\n", "<br>");
 
       tooltip.appendChild(h4);
       tooltip.appendChild(callTitle);
@@ -555,72 +496,92 @@
       return card;
     }
 
-    /**
-     * =========================
-     * MAIN
-     * =========================
-     */
+    // JSONP loader (avoids CORS)
+    function loadJsonp(url, callbackName) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = url;
+        script.async = true;
+
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("JSONP request timed out"));
+        }, 15000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          script.remove();
+          try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+        }
+
+        window[callbackName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("Failed to load JSONP script"));
+        };
+
+        document.head.appendChild(script);
+      });
+    }
+
     async function loadAndRender() {
-      // Static display text
       $("page-title").textContent = CONFIG.pageTitle;
       $("page-subtitle").innerHTML = CONFIG.pageSubtitle;
       $("footer-text").textContent = CONFIG.footerText;
 
-      setStatus("", "Loading data", "Fetching companies from " + CONFIG.dataUrl);
+      setStatus("", "Loading data", "Fetching from Apps Script (JSONP)");
 
-      let raw;
+      const cbName = "handleMarketMapPayload_" + Math.random().toString(16).slice(2);
+      const url = `${CONFIG.endpointBase}?view=${encodeURIComponent(CONFIG.view)}&callback=${encodeURIComponent(cbName)}&t=${Date.now()}`;
+
+      let payload;
       try {
-        const res = await fetch(CONFIG.dataUrl, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        raw = await res.json();
+        payload = await loadJsonp(url, cbName);
       } catch (err) {
         setStatus("error", "Failed to load data", String(err));
         return;
       }
 
-      if (!Array.isArray(raw)) {
-        setStatus("error", "Data format error", "Expected an array of companies. Got: " + typeof raw);
+      if (!payload || payload.ok !== true) {
+        const msg = payload && payload.error ? payload.error : "Unknown error";
+        setStatus("error", "Endpoint returned an error", msg);
         return;
       }
 
-      const companies = raw.map(normCompany);
-
-      // Contacted definition
-      const contacted = (CONFIG.contactedMode === "nonEmptyName")
-        ? companies.filter(c => c.name).length
-        : companies.length;
-
-      const connectedCount = companies.filter(c => isTruthy(c.connected)).length;
-      const callExecutedCompanies = companies.filter(c => isTruthy(c.callExecuted));
-      const callExecutedCount = callExecutedCompanies.length;
+      const contacted = Number(payload?.funnel?.contacted ?? 0);
+      const connected = Number(payload?.funnel?.connected ?? 0);
+      const callExecuted = Number(payload?.funnel?.callExecuted ?? 0);
 
       $("count-contacted").textContent = String(contacted);
-      $("count-connected").textContent = String(connectedCount);
-      $("count-call-executed").textContent = String(callExecutedCount);
+      $("count-connected").textContent = String(connected);
+      $("count-call-executed").textContent = String(callExecuted);
 
-      $("metric-connection-rate").textContent = pct(connectedCount, contacted);
-      $("metric-call-executed-rate").textContent = pct(callExecutedCount, contacted);
+      $("metric-connection-rate").textContent = pct(connected, contacted);
+      $("metric-call-executed-rate").textContent = pct(callExecuted, contacted);
 
-      // Render call executed grid
       const grid = $("call-executed-grid");
       grid.innerHTML = "";
 
-      let toRender = callExecutedCompanies;
-      if (typeof CONFIG.maxCards === "number") {
-        toRender = toRender.slice(0, CONFIG.maxCards);
-      }
+      let cards = Array.isArray(payload.callExecutedCompanies) ? payload.callExecutedCompanies : [];
+      if (typeof CONFIG.maxCards === "number") cards = cards.slice(0, CONFIG.maxCards);
 
-      if (toRender.length === 0) {
+      if (cards.length === 0) {
         const empty = document.createElement("div");
         empty.className = "status";
         empty.style.gridColumn = "1 / -1";
-        empty.innerHTML = "<strong>No Call Executed companies found</strong><div class='muted'>Check your fieldMap for callExecuted and confirm the source values match truthyValues.</div>";
+        empty.innerHTML = "<strong>No Call Executed companies found</strong><div class='muted'>Check the sheet values in the Call Executed column.</div>";
         grid.appendChild(empty);
       } else {
-        toRender.forEach(c => grid.appendChild(makeCard(c)));
+        cards.forEach(c => grid.appendChild(makeCard(c)));
       }
 
-      setStatus("ok", "Loaded successfully", `Companies: ${companies.length}. Connected: ${connectedCount}. Call Executed: ${callExecutedCount}.`);
+      const ts = String(payload?.meta?.timestamp || "");
+      const rows = String(payload?.meta?.rows ?? "");
+      setStatus("ok", "Loaded successfully", `Rows: ${rows}. Timestamp: ${ts}`);
     }
 
     loadAndRender();
