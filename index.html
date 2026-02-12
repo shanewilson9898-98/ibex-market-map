@@ -1,908 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shane Wilson for Ibex: Winter 2026 Market Map</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shane Wilson for Ibex: Winter 2026 Market Map</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            background: #ffffff;
-            padding: 50px 30px;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+      background: #ffffff;
+      padding: 50px 30px;
+      color: #111827;
+    }
 
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
+    .container { max-width: 1600px; margin: 0 auto; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #f0f0f0;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid #f0f0f0;
+    }
 
-        .header h1 {
-            font-size: 48px;
-            font-weight: 700;
-            color: #6B46C1;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
+    .header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #6B46C1;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
 
-        .header .subtitle {
-            font-size: 18px;
-            color: #666;
-            font-weight: 400;
-            margin-top: 10px;
-        }
+    .header .subtitle {
+      font-size: 18px;
+      color: #666;
+      font-weight: 400;
+      margin-top: 10px;
+    }
 
-        .category-section {
-            margin-bottom: 50px;
-            break-inside: avoid;
-        }
+    .nav-links {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        .category-header {
-            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
-            color: white;
-            padding: 18px 28px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
-        }
+    .nav-links a {
+      display: inline-block;
+      padding: 10px 24px;
+      margin: 0 10px;
+      background: rgba(124, 58, 237, 0.1);
+      color: #7C3AED;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
 
-        .category-title {
-            font-size: 22px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            color: #ffffff;
-        }
+    .nav-links a:hover {
+      background: #7C3AED;
+      color: white;
+    }
 
-        .category-count {
-            font-size: 14px;
-            opacity: 0.95;
-            margin-top: 6px;
-            font-weight: 400;
-        }
+    .nav-links a.active {
+      background: #7C3AED;
+      color: white;
+    }
 
-        .companies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-            gap: 18px;
-            padding: 0 10px;
-        }
+    .category-section {
+      margin-bottom: 50px;
+      break-inside: avoid;
+    }
 
-        .company-card {
-            background: #ffffff;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 22px 18px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 130px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-        }
+    .category-header {
+      background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+      color: white;
+      padding: 18px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
+    }
 
-        .company-card:hover {
-            border-color: #7C3AED;
-            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
-            transform: translateY(-3px);
-        }
+    .category-title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #ffffff;
+    }
 
-        .company-logo {
-            width: 85px;
-            height: 85px;
-            object-fit: contain;
-            margin-bottom: 14px;
-            filter: grayscale(0%);
-        }
+    .category-count {
+      font-size: 14px;
+      opacity: 0.95;
+      margin-top: 6px;
+      font-weight: 400;
+    }
 
-        .company-logo.fallback {
-            width: 100%;
-            height: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 600;
-            color: #7C3AED;
-            text-align: center;
-            line-height: 1.3;
-            padding: 10px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
-            border-radius: 8px;
-        }
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 18px;
+      padding: 0 10px;
+    }
 
-        .company-name {
-            font-size: 13px;
-            color: #374151;
-            text-align: center;
-            font-weight: 500;
-            line-height: 1.3;
-            word-wrap: break-word;
-            max-width: 100%;
-        }
+    .company-card {
+      background: #ffffff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 130px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+      outline: none;
+    }
 
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 2px solid #f0f0f0;
-        }
+    .company-card:hover,
+    .company-card:focus-visible {
+      border-color: #7C3AED;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
+      transform: translateY(-3px);
+    }
 
-        .stats {
-            margin-bottom: 25px;
-        }
+    .company-logo {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      margin-bottom: 14px;
+      filter: grayscale(0%);
+    }
 
-        .stats-number {
-            font-size: 56px;
-            font-weight: 700;
-            color: #7C3AED;
-            margin-bottom: 10px;
-        }
+    .company-logo.fallback {
+      width: 100%;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7C3AED;
+      text-align: center;
+      line-height: 1.3;
+      padding: 10px;
+      background: linear-gradient(
+        135deg,
+        rgba(124, 58, 237, 0.05) 0%,
+        rgba(167, 139, 250, 0.05) 100%
+      );
+      border-radius: 8px;
+    }
 
-        .stats-label {
-            font-size: 16px;
-            color: #6b7280;
-            font-weight: 500;
-        }
+    .company-name {
+      font-size: 13px;
+      color: #374151;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.3;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
 
-        .footer-branding {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-top: 20px;
-        }
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 2px solid #f0f0f0;
+    }
 
-        @media print {
-            body {
-                padding: 20px;
-            }
-            .category-section {
-                page-break-inside: avoid;
-            }
-        }
+    .stats { margin-bottom: 25px; }
 
-        /* Purple gradient variations for different categories */
-        .category-section:nth-child(1) .category-header {
-            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
-        }
+    .stats-number {
+      font-size: 56px;
+      font-weight: 700;
+      color: #7C3AED;
+      margin-bottom: 10px;
+    }
 
-        .category-section:nth-child(2) .category-header {
-            background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 100%);
-        }
+    .stats-label {
+      font-size: 16px;
+      color: #6b7280;
+      font-weight: 500;
+    }
 
-        .category-section:nth-child(3) .category-header {
-            background: linear-gradient(135deg, #9333EA 0%, #D8B4FE 100%);
-        }
+    .footer-branding {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-top: 20px;
+    }
 
-        .category-section:nth-child(4) .category-header {
-            background: linear-gradient(135deg, #7C3AED 0%, #C4B5FD 100%);
-        }
+    @media print {
+      body { padding: 20px; }
+      .category-section { page-break-inside: avoid; }
+      .company-card { box-shadow: none !important; transform: none !important; }
+    }
 
-        .category-section:nth-child(5) .category-header {
-            background: linear-gradient(135deg, #6D28D9 0%, #A78BFA 100%);
-        }
-
-        .category-section:nth-child(6) .category-header {
-            background: linear-gradient(135deg, #8B5CF6 0%, #DDD6FE 100%);
-        }
-
-        .category-section:nth-child(7) .category-header {
-            background: linear-gradient(135deg, #7C3AED 0%, #E9D5FF 100%);
-        }
-
-        .nav-links {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .nav-links a {
-            display: inline-block;
-            padding: 10px 24px;
-            margin: 0 10px;
-            background: rgba(124, 58, 237, 0.1);
-            color: #7C3AED;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            background: #7C3AED;
-            color: white;
-        }
-    </style>
+    /* Purple gradient variations */
+    .category-section:nth-child(1) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%); }
+    .category-section:nth-child(2) .category-header { background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 100%); }
+    .category-section:nth-child(3) .category-header { background: linear-gradient(135deg, #9333EA 0%, #D8B4FE 100%); }
+    .category-section:nth-child(4) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #C4B5FD 100%); }
+    .category-section:nth-child(5) .category-header { background: linear-gradient(135deg, #6D28D9 0%, #A78BFA 100%); }
+    .category-section:nth-child(6) .category-header { background: linear-gradient(135deg, #8B5CF6 0%, #DDD6FE 100%); }
+    .category-section:nth-child(7) .category-header { background: linear-gradient(135deg, #7C3AED 0%, #E9D5FF 100%); }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Shane Wilson for Ibex: Winter 2026 Market Map</h1>
-            <div class="subtitle">107 Target Companies Across Industrial &amp; Logistics Verticals</div>
-        </div>
-
-        <div class="nav-links">
-            <a href="index.html" style="background: #7C3AED; color: white;">Market Map</a>
-            <a href="sales_funnel.html">Deal Flow</a>
-        </div>
-
-        <div id="market-map"></div>
-
-        <div class="footer">
-            <div class="stats">
-                <div class="stats-number">107</div>
-                <div class="stats-label">Companies Mapped Across 9 Categories</div>
-            </div>
-            <div class="footer-branding">
-                © 2026 IBEX Investors, Inc. | Winter 2026
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>Shane Wilson for Ibex: Winter 2026 Market Map</h1>
+      <div class="subtitle">107 Target Companies Across Industrial &amp; Logistics Verticals</div>
     </div>
 
-    <script>
-        const LOGO_OVERRIDES = {
-            "Belli (Business/Productivity Software)": "https://image.pitchbook.com/xWE2mipZ6E676ujSc53MKbckesyJb1762924006728_50x50"
-        };
+    <div class="nav-links">
+      <a class="active" href="index.html">Market Map</a>
+      <a href="sales_funnel.html">Deal Flow</a>
+    </div>
 
-        function normalizeDomain(url) {
-            if (!url) return "";
-            let u = String(url).trim();
-            u = u.replace(/^https?:\/\//i, "");
-            u = u.replace(/^www\./i, "");
-            u = u.split("/")[0];
-            return u;
-        }
+    <div id="market-map"></div>
 
-        function resolveLogo(company) {
-            const name = company["Company Name"] || "";
-            if (LOGO_OVERRIDES[name]) return LOGO_OVERRIDES[name];
+    <div class="footer">
+      <div class="stats">
+        <div class="stats-number" id="total-companies">107</div>
+        <div class="stats-label" id="total-label">Companies Mapped Across 9 Categories</div>
+      </div>
+      <div class="footer-branding">© 2026 IBEX Investors, Inc. | Winter 2026</div>
+    </div>
+  </div>
 
-            const raw = company["Logo link"] || "";
-            const rawStr = String(raw).trim();
+  <script>
+    // Manual logo overrides when PitchBook links are profile pages (not direct images), or when you want a specific asset.
+    const LOGO_OVERRIDES = {
+      "Belli (Business/Productivity Software)": "https://image.pitchbook.com/xWE2mipZ6E676ujSc53MKbckesyJb1762924006728_50x50"
+    };
 
-            // Accept direct image URLs (PitchBook image CDN, favicons, clearbit, etc.)
-            if (rawStr && /^https?:\/\//i.test(rawStr) && !rawStr.includes("my.pitchbook.com/profile")) {
-                return rawStr;
-            }
-
-            // If it's a PitchBook profile link or missing, fall back to Clearbit by domain
-            const domain = normalizeDomain(company["Url"] || "");
-            if (domain) return "https://logo.clearbit.com/" + domain;
-            return "";
-        }
-
-        const marketMapData = {
-  "Asset Visibility, Monitoring, and Risk": [
-    {
-      "Company Name": "Bluicity",
-      "Logo link": "https://image.pitchbook.com/1yNvpGxbgNWhhOXgHMMOOuwBEv01699443127818_110x110",
-      "Url": "www.bluicity.com"
-    },
-    {
-      "Company Name": "Cerebrum (Software)",
-      "Logo link": "https://image.pitchbook.com/ccPluPufYaxx5Si9Ji2IySzvchD1641582493677_110x110",
-      "Url": "www.cerebrumsensor.com"
-    },
-    {
-      "Company Name": "Innovate-Ops",
-      "Logo link": "https://image.pitchbook.com/xd0ANWwu0Mhy8Gn7WZqcHkyOqgA1754503871998_110x110",
-      "Url": "innovate-ops.com"
-    },
-    {
-      "Company Name": "Mentium",
-      "Logo link": "https://image.pitchbook.com/zZB39nNOmrk83aiSd6Q8oOPupgj1755750069568_110x110",
-      "Url": "www.mentium.io"
-    },
-    {
-      "Company Name": "Takt (Business/Productivity Software)",
-      "Logo link": "https://image.pitchbook.com/iaWb1xwL54NHSjBSFYqvmp5SVJ71762351798729_110x110",
-      "Url": "www.takt.io"
-    },
-    {
-      "Company Name": "Transparent Path",
-      "Logo link": "https://image.pitchbook.com/a0UhxLXnGb8jcmddsUtLLeOv8az1764170499926_110x110",
-      "Url": "www.transparentpath.com"
-    },
-    {
-      "Company Name": "kimaru.ai",
-      "Logo link": "https://image.pitchbook.com/1UULOtinXZpgArPsRlxL7YwiuiH1728284242842_110x110",
-      "Url": "kimaru.ai"
+    function normalizeDomain(url) {
+      if (!url) return "";
+      let u = String(url).trim();
+      u = u.replace(/^https?:\/\//i, "");
+      u = u.replace(/^www\./i, "");
+      u = u.split("/")[0];
+      return u;
     }
-  ],
-  "Autonomy, Perception, Robotics": [
-    {
-      "Company Name": "Advex AI",
-      "Logo link": "https://image.pitchbook.com/NgXoiIlzVfBoQ3Y1fP8s3x3ea4m1769441472046_110x110",
-      "Url": "www.advexai.com"
-    },
-    {
-      "Company Name": "AndrenaM",
-      "Logo link": "https://image.pitchbook.com/7gXmcqbFM0HQwP77fpkXegAeFc2UH1755100205448_50x50",
-      "Url": "www.andrenam.com"
-    },
-    {
-      "Company Name": "Autobon AI",
-      "Logo link": "https://image.pitchbook.com/SZMcwxBclB8fmgwmrff1hdTbd1r1696335035021_110x110",
-      "Url": "www.autobon.ai"
-    },
-    {
-      "Company Name": "BiFrost",
-      "Logo link": "https://logo.clearbit.com/www.bifrost.ai",
-      "Url": "www.bifrost.ai"
-    },
-    {
-      "Company Name": "Bloom (Detroit)",
-      "Logo link": "https://image.pitchbook.com/Yb71rkZ2QP77r9m4KYVVru0shUO1757420382416_110x110",
-      "Url": "www.togetherwebloom.us"
-    },
-    {
-      "Company Name": "Chassy",
-      "Logo link": "https://image.pitchbook.com/3ovazULhy0Rsnr7zfTt5RuGgeKQ1706718239067_110x110",
-      "Url": "www.chassy.io"
-    },
-    {
-      "Company Name": "Clip Automation",
-      "Logo link": "https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110",
-      "Url": "www.clipautomation.com"
-    },
-    {
-      "Company Name": "Cloneable",
-      "Logo link": "https://image.pitchbook.com/OP6wE5LDKJ5hxRdvBfIPz7IWmSr1732170038063_110x110",
-      "Url": "www.cloneable.ai"
-    },
-    {
-      "Company Name": "Dataviva",
-      "Logo link": "https://image.pitchbook.com/NWx3DmIGAnS3275WjxWn24b490G1683701119977_110x110",
-      "Url": "www.dataviva.com"
-    },
-    {
-      "Company Name": "Et Cetera Robotics",
-      "Logo link": "https://image.pitchbook.com/tKI4T5qVtZvMR0BJcuBZ5AVRoVJ1765532937635_110x110",
-      "Url": "www.etcrobotics.com"
-    },
-    {
-      "Company Name": "GemaTEG",
-      "Logo link": "https://image.pitchbook.com/UmxE6aKgmTOaOvXDzrLtzZXdRT31740678173101_110x110",
-      "Url": "www.gemateg.com"
-    },
-    {
-      "Company Name": "Heft IQ",
-      "Logo link": "https://image.pitchbook.com/jre7Mt3Ln4IfeSrVkSrZF6xljZO1747633915184_110x110",
-      "Url": "www.heftiq.com"
-    },
-    {
-      "Company Name": "Kestrel (Aerospace and Defense)",
-      "Logo link": "https://image.pitchbook.com/30DTgoFTUHlG0vKECjlVtkrKJoF1763392996018_110x110",
-      "Url": "www.kestrelintelligence.com"
-    },
-    {
-      "Company Name": "Motoring Labs",
-      "Logo link": "https://image.pitchbook.com/u8OBVPVSWz71TKMRVwLDonNNO3O1682339730116_110x110",
-      "Url": "www.trymotoring.com"
-    },
-    {
-      "Company Name": "Nexera Robotics",
-      "Logo link": "https://image.pitchbook.com/01aoMJ38q8Z6wW6wymXyZssItQWLL1740655501735_50x50",
-      "Url": "www.nexera-robotics.com"
-    },
-    {
-      "Company Name": "Pitch Aeronautics",
-      "Logo link": "https://image.pitchbook.com/qAeEoqelOMyCiF63p70kPpGfKyZ1706020650285_110x110",
-      "Url": "www.pitchaero.com"
-    },
-    {
-      "Company Name": "Railspire",
-      "Logo link": "https://image.pitchbook.com/5495PoerU92Ia2FqvkqlfSjgFpq1736867732128_110x110",
-      "Url": "www.railspire.com"
-    },
-    {
-      "Company Name": "Reflex Robotics",
-      "Logo link": "https://image.pitchbook.com/pJLTPeBwysxl8Ku7SzBnahWlMMu7H1753337788435_50x50",
-      "Url": "www.reflexrobotics.com"
-    },
-    {
-      "Company Name": "Roboto",
-      "Logo link": "https://logo.clearbit.com/www.roboto.ai",
-      "Url": "http://www.roboto.ai/"
-    },
-    {
-      "Company Name": "Tessera Labs",
-      "Logo link": "https://image.pitchbook.com/8yR92a6rzJMP1NWQ013h9NfrJXy1765788933951_110x110",
-      "Url": "www.tesseralabs.ai"
-    },
-    {
-      "Company Name": "Two Boxes",
-      "Logo link": "https://image.pitchbook.com/ga3WejbDjqvx6dyuK1fM017rdOC1762512494085_110x110",
-      "Url": "www.twoboxes.com"
-    },
-    {
-      "Company Name": "Waveye",
-      "Logo link": "https://image.pitchbook.com/FDbkzZnIQrPs1BJNgGA1fWLaiJs1706608275422_110x110",
-      "Url": "http://www.waveye.com/"
+
+    function isProbablyImageUrl(url) {
+      if (!url) return false;
+      const u = String(url).trim();
+      if (!/^https?:\/\//i.test(u)) return false;
+      if (u.includes("my.pitchbook.com/profile")) return false;
+      return true;
     }
-  ],
-  "Business / Productivity Software": [
-    {
-      "Company Name": "FLIP (Palo Alto)",
-      "Logo link": "https://image.pitchbook.com/WQfh83pDspoUt13x4SGOoSGl4kpSq1756917446232_50x50",
-      "Url": "www.goflip.ai"
-    },
-    {
-      "Company Name": "GetLeo",
-      "Logo link": "https://logo.clearbit.com/www.getleo.ai",
-      "Url": "www.getleo.ai"
-    },
-    {
-      "Company Name": "Unbane",
-      "Logo link": "https://image.pitchbook.com/8E2xGPNNNiVhrVlWyXhy96dX6ZlsN1764751791302_50x50",
-      "Url": "www.unbane.com"
-    },
-    {
-      "Company Name": "Zoo",
-      "Logo link": "https://image.pitchbook.com/2fSREfDtTzHgWECy9rM11KypcWKFn1768900051721_50x50",
-      "Url": "www.zoo.dev"
+
+    function resolveLogo(company) {
+      const name = company["Company Name"] || "";
+      if (LOGO_OVERRIDES[name]) return LOGO_OVERRIDES[name];
+
+      const raw = (company["Logo link"] || "").toString().trim();
+      if (isProbablyImageUrl(raw)) return raw;
+
+      const domain = normalizeDomain(company["Url"] || "");
+      if (domain) return "https://logo.clearbit.com/" + domain;
+
+      return "";
     }
-  ],
-  "Energy and Industrial Infrastructure": [
-    {
-      "Company Name": "ePropelled",
-      "Logo link": "https://image.pitchbook.com/mXgcAVzhoI2lvEb1w2Id8H7NtaehF1747243500865_50x50",
-      "Url": "www.epropelled.com"
+
+    const marketMapData = {
+      "Asset Visibility, Monitoring, and Risk": [
+        {"Company Name":"Bluicity","Logo link":"https://image.pitchbook.com/1yNvpGxbgNWhhOXgHMMOOuwBEv01699443127818_110x110","Url":"www.bluicity.com"},
+        {"Company Name":"Cerebrum (Software)","Logo link":"https://image.pitchbook.com/ccPluPufYaxx5Si9Ji2IySzvchD1641582493677_110x110","Url":"www.cerebrumsensor.com"},
+        {"Company Name":"Innovate-Ops","Logo link":"https://image.pitchbook.com/xd0ANWwu0Mhy8Gn7WZqcHkyOqgA1754503871998_110x110","Url":"innovate-ops.com"},
+        {"Company Name":"Mentium","Logo link":"https://image.pitchbook.com/zZB39nNOmrk83aiSd6Q8oOPupgj1755750069568_110x110","Url":"www.mentium.io"},
+        {"Company Name":"Takt (Business/Productivity Software)","Logo link":"https://image.pitchbook.com/iaWb1xwL54NHSjBSFYqvmp5SVJ71762351798729_110x110","Url":"www.takt.io"},
+        {"Company Name":"Transparent Path","Logo link":"https://image.pitchbook.com/a0UhxLXnGb8jcmddsUtLLeOv8az1764170499926_110x110","Url":"www.transparentpath.com"},
+        {"Company Name":"kimaru.ai","Logo link":"https://image.pitchbook.com/1UULOtinXZpgArPsRlxL7YwiuiH1728284242842_110x110","Url":"kimaru.ai"}
+      ],
+      "Autonomy, Perception, Robotics": [
+        {"Company Name":"Advex AI","Logo link":"https://image.pitchbook.com/NgXoiIlzVfBoQ3Y1fP8s3x3ea4m1769441472046_110x110","Url":"www.advexai.com"},
+        {"Company Name":"AndrenaM","Logo link":"https://image.pitchbook.com/7gXmcqbFM0HQwP77fpkXegAeFc2UH1755100205448_50x50","Url":"www.andrenam.com"},
+        {"Company Name":"Autobon AI","Logo link":"https://image.pitchbook.com/SZMcwxBclB8fmgwmrff1hdTbd1r1696335035021_110x110","Url":"www.autobon.ai"},
+        {"Company Name":"BiFrost","Logo link":"https://logo.clearbit.com/www.bifrost.ai","Url":"www.bifrost.ai"},
+        {"Company Name":"Bloom (Detroit)","Logo link":"https://image.pitchbook.com/Yb71rkZ2QP77r9m4KYVVru0shUO1757420382416_110x110","Url":"www.togetherwebloom.us"},
+        {"Company Name":"Chassy","Logo link":"https://image.pitchbook.com/3ovazULhy0Rsnr7zfTt5RuGgeKQ1706718239067_110x110","Url":"www.chassy.io"},
+        {"Company Name":"Clip Automation","Logo link":"https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110","Url":"www.clipautomation.com"},
+        {"Company Name":"Cloneable","Logo link":"https://image.pitchbook.com/OP6wE5LDKJ5hxRdvBfIPz7IWmSr1732170038063_110x110","Url":"www.cloneable.ai"},
+        {"Company Name":"Dataviva","Logo link":"https://image.pitchbook.com/NWx3DmIGAnS3275WjxWn24b490G1683701119977_110x110","Url":"www.dataviva.com"},
+        {"Company Name":"Et Cetera Robotics","Logo link":"https://image.pitchbook.com/tKI4T5qVtZvMR0BJcuBZ5AVRoVJ1765532937635_110x110","Url":"www.etcrobotics.com"},
+        {"Company Name":"GemaTEG","Logo link":"https://image.pitchbook.com/UmxE6aKgmTOaOvXDzrLtzZXdRT31740678173101_110x110","Url":"www.gemateg.com"},
+        {"Company Name":"Heft IQ","Logo link":"https://image.pitchbook.com/jre7Mt3Ln4IfeSrVkSrZF6xljZO1747633915184_110x110","Url":"www.heftiq.com"},
+        {"Company Name":"Kestrel (Aerospace and Defense)","Logo link":"https://image.pitchbook.com/30DTgoFTUHlG0vKECjlVtkrKJoF1763392996018_110x110","Url":"www.kestrelintelligence.com"},
+        {"Company Name":"Motoring Labs","Logo link":"https://image.pitchbook.com/u8OBVPVSWz71TKMRVwLDonNNO3O1682339730116_110x110","Url":"www.trymotoring.com"},
+        {"Company Name":"Nexera Robotics","Logo link":"https://image.pitchbook.com/01aoMJ38q8Z6wW6wymXyZssItQWLL1740655501735_50x50","Url":"www.nexera-robotics.com"},
+        {"Company Name":"Pitch Aeronautics","Logo link":"https://image.pitchbook.com/qAeEoqelOMyCiF63p70kPpGfKyZ1706020650285_110x110","Url":"www.pitchaero.com"},
+        {"Company Name":"Railspire","Logo link":"https://image.pitchbook.com/5495PoerU92Ia2FqvkqlfSjgFpq1736867732128_110x110","Url":"www.railspire.com"},
+        {"Company Name":"Reflex Robotics","Logo link":"https://image.pitchbook.com/pJLTPeBwysxl8Ku7SzBnahWlMMu7H1753337788435_50x50","Url":"www.reflexrobotics.com"},
+        {"Company Name":"Roboto","Logo link":"https://logo.clearbit.com/www.roboto.ai","Url":"http://www.roboto.ai/"},
+        {"Company Name":"Tessera Labs","Logo link":"https://image.pitchbook.com/8yR92a6rzJMP1NWQ013h9NfrJXy1765788933951_110x110","Url":"www.tesseralabs.ai"},
+        {"Company Name":"Two Boxes","Logo link":"https://image.pitchbook.com/ga3WejbDjqvx6dyuK1fM017rdOC1762512494085_110x110","Url":"www.twoboxes.com"},
+        {"Company Name":"Waveye","Logo link":"https://image.pitchbook.com/FDbkzZnIQrPs1BJNgGA1fWLaiJs1706608275422_110x110","Url":"http://www.waveye.com/"}
+      ],
+      "Business / Productivity Software": [
+        {"Company Name":"FLIP (Palo Alto)","Logo link":"https://image.pitchbook.com/WQfh83pDspoUt13x4SGOoSGl4kpSq1756917446232_50x50","Url":"www.goflip.ai"},
+        {"Company Name":"GetLeo","Logo link":"https://logo.clearbit.com/www.getleo.ai","Url":"www.getleo.ai"},
+        {"Company Name":"Unbane","Logo link":"https://image.pitchbook.com/8E2xGPNNNiVhrVlWyXhy96dX6ZlsN1764751791302_50x50","Url":"www.unbane.com"},
+        {"Company Name":"Zoo","Logo link":"https://image.pitchbook.com/2fSREfDtTzHgWECy9rM11KypcWKFn1768900051721_50x50","Url":"www.zoo.dev"}
+      ],
+      "Energy and Industrial Infrastructure": [
+        {"Company Name":"ePropelled","Logo link":"https://image.pitchbook.com/mXgcAVzhoI2lvEb1w2Id8H7NtaehF1747243500865_50x50","Url":"www.epropelled.com"}
+      ],
+      "Industrial Automation and Manufacturing": [
+        {"Company Name":"Altitude AI","Logo link":"https://image.pitchbook.com/RhWbWET4arBIRJtAj9GsnNXYHIA1756893567825_110x110","Url":"www.getaltitudeai.com"},
+        {"Company Name":"Anvil Robotics","Logo link":"https://image.pitchbook.com/IfozbplJaNGfLPP4xp2sIzBgp101764164852553_110x110","Url":"www.anvil.bot"},
+        {"Company Name":"Anyware Robotics","Logo link":"https://logo.clearbit.com/www.anyware-robotics.com","Url":"www.anyware-robotics.com"},
+        {"Company Name":"Arvist","Logo link":"https://image.pitchbook.com/b1zZrANE2hT7VQnZLPEOxWozhgQSq1755153903931_50x50","Url":"www.arvist.ai"},
+        {"Company Name":"AutoScheduler.AI","Logo link":"https://image.pitchbook.com/rVDnnJg02XeKI1tYmw5dxi6McWh1753688250073_110x110","Url":"www.autoscheduler.ai"},
+        {"Company Name":"CUBE","Logo link":"https://image.pitchbook.com/IOJWunGhzR3C3oqLxV5jfcTr8L31733722028418_110x110","Url":"www.getcube.ai"},
+        {"Company Name":"Cartesian Kinetics","Logo link":"https://image.pitchbook.com/T1OdgSRmpzCvCsaEDeUco2e82nj1742281241040_110x110","Url":"www.cartesiankinetics.com"},
+        {"Company Name":"Contoro Robotics","Logo link":"https://logo.clearbit.com/www.contoro.com","Url":"www.contoro.com"},
+        {"Company Name":"Demandly","Logo link":"https://image.pitchbook.com/NaOpCpKHqjfSTDTovOh7dYc8p4R1730976329371_110x110","Url":"www.demandly.com"},
+        {"Company Name":"Destro AI","Logo link":"https://image.pitchbook.com/VF7WFt5E3pOsiUdph9vaYxhi3Eg1764253027710_110x110","Url":"www.destroai.com"},
+        {"Company Name":"Deterrence","Logo link":"https://image.pitchbook.com/HEyNJyd8Es17ILpgpUgDbHyGQ27T81735833507305_50x50","Url":"www.deterrence.com"},
+        {"Company Name":"Dockware","Logo link":"https://image.pitchbook.com/6tuplE96hHOtjaotJYooPM768RS1752144933047_110x110","Url":"www.dockware.ai"},
+        {"Company Name":"Elven Technologies","Logo link":"https://image.pitchbook.com/5iQyFfDbLVbyHm8mPEX4jGTvBh2Og1768216053864_50x50","Url":"www.elventech.net"},
+        {"Company Name":"Foundational Industries","Logo link":"https://image.pitchbook.com/MrPbKDNDCNwWB1yH8h4z8mDDuYr1764923767157_110x110","Url":"www.foundational.industries"},
+        {"Company Name":"FreshX","Logo link":"https://image.pitchbook.com/U71oxn5L37NSTFgEM8lAfNzILif1713874309950_110x110","Url":"getfreshx.com"},
+        {"Company Name":"Haddy","Logo link":"https://my.pitchbook.com/profile/516958-93/company/profile#timeline","Url":"www.haddy.life"},
+        {"Company Name":"Industrial Next","Logo link":"https://image.pitchbook.com/qeBtpGoWqCQCcXXZVkYk7s502qZ1751361285752_110x110","Url":"www.industrialnext.ai"},
+        {"Company Name":"Lanesurf","Logo link":"https://image.pitchbook.com/NE88l1yI9qZXD37YXP0MgBD3uWX1753681082536_110x110","Url":"www.lanesurf.com"},
+        {"Company Name":"Molg","Logo link":"https://image.pitchbook.com/4MudK47LrB1ia7Svpb3Ipi5g7Zyj71728492523069_50x50","Url":"www.molg.ai"},
+        {"Company Name":"Procense","Logo link":"https://image.pitchbook.com/EgZ8xw8tGdi8Ibhvfpf26lSYcDm1758870771974_110x110","Url":"www.procense.ai"}
+      ],
+      "Logistics and Fleet Ops Software": [
+        {"Company Name":"ARIX","Logo link":"https://image.pitchbook.com/n1f0Rn1ihJ7gbb287AvHEarddNr1733739044306_110x110","Url":"www.arix-tech.com"},
+        {"Company Name":"Aavyooh","Logo link":"https://image.pitchbook.com/Ap1BupH1Y6hqBfB1uR7IgQEjcFbfQ1765865653981_50x50","Url":"www.aavyooh.com"},
+        {"Company Name":"AiDEN Auto","Logo link":"https://image.pitchbook.com/yHkShlkpuDsIrbsrhXL7kb5nQLn1739973695704_110x110","Url":"www.aidenauto.com"},
+        {"Company Name":"Alderbuck Energy","Logo link":"https://my.pitchbook.com/profile/687507-31/company/profile","Url":"www.alderbuck.com"},
+        {"Company Name":"Anglera","Logo link":"https://image.pitchbook.com/ROChoFEKVtAzLZlomSsortNA05j5G1748427339385_50x50","Url":"www.anglera.com"},
+        {"Company Name":"Auto Hauler Exchange","Logo link":"https://image.pitchbook.com/FqW0IacscL79hFs4BVs0LStXAgU1736929838503_110x110","Url":"www.autohaulerexchange.com"},
+        {"Company Name":"Belli (Business/Productivity Software)","Logo link":"https://my.pitchbook.com/profile/639649-36/company/profile#ai-summary","Url":"www.belli.ai"},
+        {"Company Name":"FluxWorks","Logo link":"https://image.pitchbook.com/QUO6hbngnPcX2ErSnZOmrUbI6l01755687591284_110x110","Url":"www.fluxworks.co"},
+        {"Company Name":"G2Mint","Logo link":"https://image.pitchbook.com/02N8ghSJFPqUvslCsSSYxluE5no1755836889926_110x110","Url":"www.g2mint.com"},
+        {"Company Name":"H+Trace","Logo link":"https://image.pitchbook.com/F67qU6aPdIFHird5LVyAsyf4RcVp71750851554253_50x50","Url":"www.h-trace.com"},
+        {"Company Name":"IronGrid","Logo link":"https://image.pitchbook.com/ucbMxiQV0m3CzLQa7HqAVcKlGIp1754393642214_110x110","Url":"www.getirongrid.com"},
+        {"Company Name":"Nearfleet","Logo link":"https://image.pitchbook.com/HrbM6wbLCHecnUBFcB8jcb7WKq81706529260652_110x110","Url":"www.nearfleet.com"},
+        {"Company Name":"Onward Delivery","Logo link":"https://image.pitchbook.com/89YeWyuObnNLL7FbRjimD1dM9wD1670566415302_110x110","Url":"www.onwarddelivery.com"},
+        {"Company Name":"Podium Automation","Logo link":"https://image.pitchbook.com/lrR5nnZBkXru5lQV4PiuAmRnhwF1732629890165_110x110","Url":"www.podiumautomation.com"},
+        {"Company Name":"Pulse Charter Connect","Logo link":"https://my.pitchbook.com/profile/534906-55/company/profile#timeline","Url":"www.pulsecharterconnect.com"},
+        {"Company Name":"RailPulse","Logo link":"https://image.pitchbook.com/QY5UzTsP59iIoxi3Jiug3TCAS06Uj1730701167642_50x50","Url":"www.railpulse.com"},
+        {"Company Name":"Reform (Business/Productivity Software)","Logo link":"https://image.pitchbook.com/sR1aKBconGcu1WFOxjqOlRy4sHL1745559604884_110x110","Url":"www.reformhq.com"},
+        {"Company Name":"Ruck Intergalactic","Logo link":"https://image.pitchbook.com/0BLJrLKkHn9sjdv2hlUgH9gPRQe1750067761187_110x110","Url":"www.ruck.com"},
+        {"Company Name":"SCIP","Logo link":"https://image.pitchbook.com/I6MqaBVkvv5xwygiuYwoQ5MGkMS1747381791282_110x110","Url":"www.myscip.com"},
+        {"Company Name":"Ship Angel","Logo link":"https://image.pitchbook.com/cRjuI0Lp7OZ3RT2LHayRh8Ldhixu41760935833282_50x50","Url":"www.shipangel.com"},
+        {"Company Name":"Singuli","Logo link":"https://image.pitchbook.com/a0JOF3dpFgfDATAf848fKpee5701686910371101_110x110","Url":"www.singuli.co"},
+        {"Company Name":"Tavoro","Logo link":"https://image.pitchbook.com/oTboJNQkE3QF776Rm2IzvesKuKp1686039729178_110x110","Url":"www.tavoro.com"},
+        {"Company Name":"Triple Axle","Logo link":"https://image.pitchbook.com/LX3VDtY3g8wXJh5ndH9tCa4fv771711027438679_110x110","Url":"www.tripleaxle.com"},
+        {"Company Name":"Velostics","Logo link":"https://image.pitchbook.com/wEJmwI3VEZ6lJ2pd5NIPjufTF601696566598511_110x110","Url":"www.velostics.com"},
+        {"Company Name":"Warehowz","Logo link":"https://image.pitchbook.com/BIUTEgRQ8E5Cc9SyrXYwBmwZNJ91695029425654_110x110","Url":"www.warehowz.com"},
+        {"Company Name":"XY Retail","Logo link":"https://image.pitchbook.com/P92R3O4tGpBVjDJXfPMcMOudODQ1646222865130_110x110","Url":"www.xyretail.com"},
+        {"Company Name":"gatein.ai","Logo link":"https://image.pitchbook.com/favicon/gatein-ai.png","Url":"gatein.ai"}
+      ],
+      "Marketplaces and Industrial Commerce": [
+        {"Company Name":"Azalea Robotics","Logo link":"https://image.pitchbook.com/ANNYzmQCTsCGmkXifztEiicebjP1725441471727_110x110","Url":"www.azalearobotics.com"},
+        {"Company Name":"Chain.io","Logo link":"https://image.pitchbook.com/J1NFr3p2PUIBRfQAMU1HlY9hSZb1652965490073_110x110","Url":"www.chain.io"},
+        {"Company Name":"Journey Robotics","Logo link":"https://image.pitchbook.com/PS7flQXGGzXUMvt48pfvwQtSp9X1720434771090_110x110","Url":"www.journeyrobotics.com"},
+        {"Company Name":"Resin8","Logo link":"https://image.pitchbook.com/lZiKImjjkZadrPtR9WZbDq9vFzQ1748971555246_110x110","Url":"www.resin8.ai"},
+        {"Company Name":"Stock","Logo link":"https://image.pitchbook.com/53dh05Wv1RW5qjayub0g2CbTGc21756899604266_110x110","Url":"www.stockitbetter.com"}
+      ],
+      "Supply Chain Planning and Decision Intelligence": [
+        {"Company Name":"Blaise Transit","Logo link":"https://image.pitchbook.com/NmYLuFYMsl0Nwpme6E0VbC9aHEq1684413629846_110x110","Url":"www.blaisetransit.com"},
+        {"Company Name":"Capoom","Logo link":"https://logo.clearbit.com/www.capoom.com","Url":"www.capoom.com"},
+        {"Company Name":"Dryft AI","Logo link":"https://image.pitchbook.com/BmmZQnKakCwMJYnIBGM1M22fWqw1763095142855_110x110","Url":"www.dryft.ai"},
+        {"Company Name":"Flywheel AI","Logo link":"https://image.pitchbook.com/WHIUQB0KHKtdSMvN1p52ThdGPdr1758877238437_110x110","Url":"www.useflywheel.ai"},
+        {"Company Name":"General Trajectory","Logo link":"https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110","Url":"www.generaltrajectory.com"},
+        {"Company Name":"Kilsar","Logo link":"https://image.pitchbook.com/MchR2xt4mjPGFLJzMfzEqgBwKl21752726300951_110x110","Url":"www.kilsar.com"},
+        {"Company Name":"Kipo AI","Logo link":"https://image.pitchbook.com/w4nhJERQkZNms3fkf0wjibKiRjKZr1717416524076_50x50","Url":"www.kipo.ai"},
+        {"Company Name":"SG Labs","Logo link":"https://image.pitchbook.com/RxTQray1tNjpzfNcWsiAmmC9sY51734678461639_110x110","Url":"qicscan.ai"},
+        {"Company Name":"SolidIntel","Logo link":"https://my.pitchbook.com/profile/588958-93/company/profile#general-info","Url":"www.solidintel.com"},
+        {"Company Name":"TrueNorth","Logo link":"https://image.pitchbook.com/lMdyQMc1tSsavHxcekTyndDG5R51685451895008_110x110","Url":"http://www.truenorth.com/"},
+        {"Company Name":"Vadar Alpha","Logo link":"https://image.pitchbook.com/s5kfhgcChMVgkCXynzf7WAeVCs8Er1766999996985_50x50","Url":"www.vadaralpha.com"},
+        {"Company Name":"Vooma","Logo link":"https://image.pitchbook.com/9SyJIuuxGOFYWiPfP9UuTZr2dS31733153439437_110x110","Url":"www.vooma.com"},
+        {"Company Name":"supplier.io","Logo link":"https://image.pitchbook.com/Nl7VyQRBmbc7EvdrwGfNBwXRuz2xc1687268487128_50x50","Url":"www.supplier.io"}
+      ],
+      "Vehicle Platforms": [
+        {"Company Name":"Amos Power","Logo link":"https://image.pitchbook.com/h68BnzxM4dO7cUPIMuyaIgfeTxU1751884254791_110x110","Url":"www.amospower.com"},
+        {"Company Name":"Datatruck","Logo link":"https://image.pitchbook.com/Q4Z4YrME6An0BJaockwpzNs2nJk1769612326454_110x110","Url":"www.datatruck.io"},
+        {"Company Name":"FireSwarm Solutions","Logo link":"https://image.pitchbook.com/KvwKZX8HzB3ASnCEI0CkK1xSVlD1747630413159_110x110","Url":"www.fireswarmsolutions.com"},
+        {"Company Name":"Launchpad","Logo link":"https://image.pitchbook.com/z57wf8ttCqSKwWBSecZNKdAqqyk1760538042761_110x110","Url":"www.launchpad.build"},
+        {"Company Name":"Salin 247","Logo link":"https://image.pitchbook.com/j7YUUcaevTUJO8BT2Qk0mWjjI0R1677564816912_110x110","Url":"salin247.com"},
+        {"Company Name":"Seaflight Technologies","Logo link":"https://image.pitchbook.com/L2PwNGq3GQd2qSauVaLHM57Pg2E1738070689369_110x110","Url":"www.seaflight.tech"},
+        {"Company Name":"Terraline","Logo link":"https://image.pitchbook.com/MN6vLoPVSsEbDVFkuzpP3psvmPa1673602241530_110x110","Url":"terraline.io"}
+      ]
+    };
+
+    function safeUrl(u) {
+      const raw = (u || "").toString().trim();
+      if (!raw || raw === "#") return "#";
+      if (/^https?:\/\//i.test(raw)) return raw;
+      return "http://" + raw;
     }
-  ],
-  "Industrial Automation and Manufacturing": [
-    {
-      "Company Name": "Altitude AI",
-      "Logo link": "https://image.pitchbook.com/RhWbWET4arBIRJtAj9GsnNXYHIA1756893567825_110x110",
-      "Url": "www.getaltitudeai.com"
-    },
-    {
-      "Company Name": "Anvil Robotics",
-      "Logo link": "https://image.pitchbook.com/IfozbplJaNGfLPP4xp2sIzBgp101764164852553_110x110",
-      "Url": "www.anvil.bot"
-    },
-    {
-      "Company Name": "Anyware Robotics",
-      "Logo link": "https://logo.clearbit.com/www.anyware-robotics.com",
-      "Url": "www.anyware-robotics.com"
-    },
-    {
-      "Company Name": "Arvist",
-      "Logo link": "https://image.pitchbook.com/b1zZrANE2hT7VQnZLPEOxWozhgQSq1755153903931_50x50",
-      "Url": "www.arvist.ai"
-    },
-    {
-      "Company Name": "AutoScheduler.AI",
-      "Logo link": "https://image.pitchbook.com/rVDnnJg02XeKI1tYmw5dxi6McWh1753688250073_110x110",
-      "Url": "www.autoscheduler.ai"
-    },
-    {
-      "Company Name": "CUBE",
-      "Logo link": "https://image.pitchbook.com/IOJWunGhzR3C3oqLxV5jfcTr8L31733722028418_110x110",
-      "Url": "www.getcube.ai"
-    },
-    {
-      "Company Name": "Cartesian Kinetics",
-      "Logo link": "https://image.pitchbook.com/T1OdgSRmpzCvCsaEDeUco2e82nj1742281241040_110x110",
-      "Url": "www.cartesiankinetics.com"
-    },
-    {
-      "Company Name": "Contoro Robotics",
-      "Logo link": "https://logo.clearbit.com/www.contoro.com",
-      "Url": "www.contoro.com"
-    },
-    {
-      "Company Name": "Demandly",
-      "Logo link": "https://image.pitchbook.com/NaOpCpKHqjfSTDTovOh7dYc8p4R1730976329371_110x110",
-      "Url": "www.demandly.com"
-    },
-    {
-      "Company Name": "Destro AI",
-      "Logo link": "https://image.pitchbook.com/VF7WFt5E3pOsiUdph9vaYxhi3Eg1764253027710_110x110",
-      "Url": "www.destroai.com"
-    },
-    {
-      "Company Name": "Deterrence",
-      "Logo link": "https://image.pitchbook.com/HEyNJyd8Es17ILpgpUgDbHyGQ27T81735833507305_50x50",
-      "Url": "www.deterrence.com"
-    },
-    {
-      "Company Name": "Dockware",
-      "Logo link": "https://image.pitchbook.com/6tuplE96hHOtjaotJYooPM768RS1752144933047_110x110",
-      "Url": "www.dockware.ai"
-    },
-    {
-      "Company Name": "Elven Technologies",
-      "Logo link": "https://image.pitchbook.com/5iQyFfDbLVbyHm8mPEX4jGTvBh2Og1768216053864_50x50",
-      "Url": "www.elventech.net"
-    },
-    {
-      "Company Name": "Foundational Industries",
-      "Logo link": "https://image.pitchbook.com/MrPbKDNDCNwWB1yH8h4z8mDDuYr1764923767157_110x110",
-      "Url": "www.foundational.industries"
-    },
-    {
-      "Company Name": "FreshX",
-      "Logo link": "https://image.pitchbook.com/U71oxn5L37NSTFgEM8lAfNzILif1713874309950_110x110",
-      "Url": "getfreshx.com"
-    },
-    {
-      "Company Name": "Haddy",
-      "Logo link": "https://my.pitchbook.com/profile/516958-93/company/profile#timeline",
-      "Url": "www.haddy.life"
-    },
-    {
-      "Company Name": "Industrial Next",
-      "Logo link": "https://image.pitchbook.com/qeBtpGoWqCQCcXXZVkYk7s502qZ1751361285752_110x110",
-      "Url": "www.industrialnext.ai"
-    },
-    {
-      "Company Name": "Lanesurf",
-      "Logo link": "https://image.pitchbook.com/NE88l1yI9qZXD37YXP0MgBD3uWX1753681082536_110x110",
-      "Url": "www.lanesurf.com"
-    },
-    {
-      "Company Name": "Molg",
-      "Logo link": "https://image.pitchbook.com/4MudK47LrB1ia7Svpb3Ipi5g7Zyj71728492523069_50x50",
-      "Url": "www.molg.ai"
-    },
-    {
-      "Company Name": "Procense",
-      "Logo link": "https://image.pitchbook.com/EgZ8xw8tGdi8Ibhvfpf26lSYcDm1758870771974_110x110",
-      "Url": "www.procense.ai"
+
+    function createLogoNode(company) {
+      const wrap = document.createElement("div");
+      const logoUrl = resolveLogo(company);
+
+      if (!logoUrl) {
+        const fallback = document.createElement("div");
+        fallback.className = "company-logo fallback";
+        fallback.textContent = company["Company Name"] || "";
+        wrap.appendChild(fallback);
+        return wrap;
+      }
+
+      const img = document.createElement("img");
+      img.className = "company-logo";
+      img.src = logoUrl;
+      img.alt = company["Company Name"] || "";
+
+      img.onerror = function () {
+        img.remove();
+        const fallback = document.createElement("div");
+        fallback.className = "company-logo fallback";
+        fallback.textContent = company["Company Name"] || "";
+        wrap.appendChild(fallback);
+      };
+
+      wrap.appendChild(img);
+      return wrap;
     }
-  ],
-  "Logistics and Fleet Ops Software": [
-    {
-      "Company Name": "ARIX",
-      "Logo link": "https://image.pitchbook.com/n1f0Rn1ihJ7gbb287AvHEarddNr1733739044306_110x110",
-      "Url": "www.arix-tech.com"
-    },
-    {
-      "Company Name": "Aavyooh",
-      "Logo link": "https://image.pitchbook.com/Ap1BupH1Y6hqBfB1uR7IgQEjcFbfQ1765865653981_50x50",
-      "Url": "www.aavyooh.com"
-    },
-    {
-      "Company Name": "AiDEN Auto",
-      "Logo link": "https://image.pitchbook.com/yHkShlkpuDsIrbsrhXL7kb5nQLn1739973695704_110x110",
-      "Url": "www.aidenauto.com"
-    },
-    {
-      "Company Name": "Alderbuck Energy",
-      "Logo link": "https://my.pitchbook.com/profile/687507-31/company/profile",
-      "Url": "www.alderbuck.com"
-    },
-    {
-      "Company Name": "Anglera",
-      "Logo link": "https://image.pitchbook.com/ROChoFEKVtAzLZlomSsortNA05j5G1748427339385_50x50",
-      "Url": "www.anglera.com"
-    },
-    {
-      "Company Name": "Auto Hauler Exchange",
-      "Logo link": "https://image.pitchbook.com/FqW0IacscL79hFs4BVs0LStXAgU1736929838503_110x110",
-      "Url": "www.autohaulerexchange.com"
-    },
-    {
-      "Company Name": "Belli (Business/Productivity Software)",
-      "Logo link": "https://my.pitchbook.com/profile/639649-36/company/profile#ai-summary",
-      "Url": "www.belli.ai"
-    },
-    {
-      "Company Name": "FluxWorks",
-      "Logo link": "https://image.pitchbook.com/QUO6hbngnPcX2ErSnZOmrUbI6l01755687591284_110x110",
-      "Url": "www.fluxworks.co"
-    },
-    {
-      "Company Name": "G2Mint",
-      "Logo link": "https://image.pitchbook.com/02N8ghSJFPqUvslCsSSYxluE5no1755836889926_110x110",
-      "Url": "www.g2mint.com"
-    },
-    {
-      "Company Name": "H+Trace",
-      "Logo link": "https://image.pitchbook.com/F67qU6aPdIFHird5LVyAsyf4RcVp71750851554253_50x50",
-      "Url": "www.h-trace.com"
-    },
-    {
-      "Company Name": "IronGrid",
-      "Logo link": "https://image.pitchbook.com/ucbMxiQV0m3CzLQa7HqAVcKlGIp1754393642214_110x110",
-      "Url": "www.getirongrid.com"
-    },
-    {
-      "Company Name": "Nearfleet",
-      "Logo link": "https://image.pitchbook.com/HrbM6wbLCHecnUBFcB8jcb7WKq81706529260652_110x110",
-      "Url": "www.nearfleet.com"
-    },
-    {
-      "Company Name": "Onward Delivery",
-      "Logo link": "https://image.pitchbook.com/89YeWyuObnNLL7FbRjimD1dM9wD1670566415302_110x110",
-      "Url": "www.onwarddelivery.com"
-    },
-    {
-      "Company Name": "Podium Automation",
-      "Logo link": "https://image.pitchbook.com/lrR5nnZBkXru5lQV4PiuAmRnhwF1732629890165_110x110",
-      "Url": "www.podiumautomation.com"
-    },
-    {
-      "Company Name": "Pulse Charter Connect",
-      "Logo link": "https://my.pitchbook.com/profile/534906-55/company/profile#timeline",
-      "Url": "www.pulsecharterconnect.com"
-    },
-    {
-      "Company Name": "RailPulse",
-      "Logo link": "https://image.pitchbook.com/QY5UzTsP59iIoxi3Jiug3TCAS06Uj1730701167642_50x50",
-      "Url": "www.railpulse.com"
-    },
-    {
-      "Company Name": "Reform (Business/Productivity Software)",
-      "Logo link": "https://image.pitchbook.com/sR1aKBconGcu1WFOxjqOlRy4sHL1745559604884_110x110",
-      "Url": "www.reformhq.com"
-    },
-    {
-      "Company Name": "Ruck Intergalactic",
-      "Logo link": "https://image.pitchbook.com/0BLJrLKkHn9sjdv2hlUgH9gPRQe1750067761187_110x110",
-      "Url": "www.ruck.com"
-    },
-    {
-      "Company Name": "SCIP",
-      "Logo link": "https://image.pitchbook.com/I6MqaBVkvv5xwygiuYwoQ5MGkMS1747381791282_110x110",
-      "Url": "www.myscip.com"
-    },
-    {
-      "Company Name": "Ship Angel",
-      "Logo link": "https://image.pitchbook.com/cRjuI0Lp7OZ3RT2LHayRh8Ldhixu41760935833282_50x50",
-      "Url": "www.shipangel.com"
-    },
-    {
-      "Company Name": "Singuli",
-      "Logo link": "https://image.pitchbook.com/a0JOF3dpFgfDATAf848fKpee5701686910371101_110x110",
-      "Url": "www.singuli.co"
-    },
-    {
-      "Company Name": "Tavoro",
-      "Logo link": "https://image.pitchbook.com/oTboJNQkE3QF776Rm2IzvesKuKp1686039729178_110x110",
-      "Url": "www.tavoro.com"
-    },
-    {
-      "Company Name": "Triple Axle",
-      "Logo link": "https://image.pitchbook.com/LX3VDtY3g8wXJh5ndH9tCa4fv771711027438679_110x110",
-      "Url": "www.tripleaxle.com"
-    },
-    {
-      "Company Name": "Velostics",
-      "Logo link": "https://image.pitchbook.com/wEJmwI3VEZ6lJ2pd5NIPjufTF601696566598511_110x110",
-      "Url": "www.velostics.com"
-    },
-    {
-      "Company Name": "Warehowz",
-      "Logo link": "https://image.pitchbook.com/BIUTEgRQ8E5Cc9SyrXYwBmwZNJ91695029425654_110x110",
-      "Url": "www.warehowz.com"
-    },
-    {
-      "Company Name": "XY Retail",
-      "Logo link": "https://image.pitchbook.com/P92R3O4tGpBVjDJXfPMcMOudODQ1646222865130_110x110",
-      "Url": "www.xyretail.com"
-    },
-    {
-      "Company Name": "gatein.ai",
-      "Logo link": "https://image.pitchbook.com/favicon/gatein-ai.png",
-      "Url": "gatein.ai"
+
+    function createCompanyCard(company) {
+      const card = document.createElement("a");
+      card.className = "company-card";
+      card.href = safeUrl(company.Url);
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+
+      card.appendChild(createLogoNode(company));
+
+      const name = document.createElement("div");
+      name.className = "company-name";
+      name.textContent = company["Company Name"] || "";
+      card.appendChild(name);
+
+      return card;
     }
-  ],
-  "Marketplaces and Industrial Commerce": [
-    {
-      "Company Name": "Azalea Robotics",
-      "Logo link": "https://image.pitchbook.com/ANNYzmQCTsCGmkXifztEiicebjP1725441471727_110x110",
-      "Url": "www.azalearobotics.com"
-    },
-    {
-      "Company Name": "Chain.io",
-      "Logo link": "https://image.pitchbook.com/J1NFr3p2PUIBRfQAMU1HlY9hSZb1652965490073_110x110",
-      "Url": "www.chain.io"
-    },
-    {
-      "Company Name": "Journey Robotics",
-      "Logo link": "https://image.pitchbook.com/PS7flQXGGzXUMvt48pfvwQtSp9X1720434771090_110x110",
-      "Url": "www.journeyrobotics.com"
-    },
-    {
-      "Company Name": "Resin8",
-      "Logo link": "https://image.pitchbook.com/lZiKImjjkZadrPtR9WZbDq9vFzQ1748971555246_110x110",
-      "Url": "www.resin8.ai"
-    },
-    {
-      "Company Name": "Stock",
-      "Logo link": "https://image.pitchbook.com/53dh05Wv1RW5qjayub0g2CbTGc21756899604266_110x110",
-      "Url": "www.stockitbetter.com"
+
+    function createCategorySection(categoryName, companies) {
+      const section = document.createElement("div");
+      section.className = "category-section";
+
+      const header = document.createElement("div");
+      header.className = "category-header";
+
+      const title = document.createElement("div");
+      title.className = "category-title";
+      title.textContent = categoryName;
+
+      const count = document.createElement("div");
+      count.className = "category-count";
+      count.textContent = `${companies.length} companies`;
+
+      header.appendChild(title);
+      header.appendChild(count);
+
+      const grid = document.createElement("div");
+      grid.className = "companies-grid";
+      companies.forEach((c) => grid.appendChild(createCompanyCard(c)));
+
+      section.appendChild(header);
+      section.appendChild(grid);
+
+      return section;
     }
-  ],
-  "Supply Chain Planning and Decision Intelligence": [
-    {
-      "Company Name": "Blaise Transit",
-      "Logo link": "https://image.pitchbook.com/NmYLuFYMsl0Nwpme6E0VbC9aHEq1684413629846_110x110",
-      "Url": "www.blaisetransit.com"
-    },
-    {
-      "Company Name": "Capoom",
-      "Logo link": "https://logo.clearbit.com/www.capoom.com",
-      "Url": "www.capoom.com"
-    },
-    {
-      "Company Name": "Dryft AI",
-      "Logo link": "https://image.pitchbook.com/BmmZQnKakCwMJYnIBGM1M22fWqw1763095142855_110x110",
-      "Url": "www.dryft.ai"
-    },
-    {
-      "Company Name": "Flywheel AI",
-      "Logo link": "https://image.pitchbook.com/WHIUQB0KHKtdSMvN1p52ThdGPdr1758877238437_110x110",
-      "Url": "www.useflywheel.ai"
-    },
-    {
-      "Company Name": "General Trajectory",
-      "Logo link": "https://image.pitchbook.com/pjQ1fCwNqUmDla9YRXuVEwpzS281739466164783_110x110",
-      "Url": "www.generaltrajectory.com"
-    },
-    {
-      "Company Name": "Kilsar",
-      "Logo link": "https://image.pitchbook.com/MchR2xt4mjPGFLJzMfzEqgBwKl21752726300951_110x110",
-      "Url": "www.kilsar.com"
-    },
-    {
-      "Company Name": "Kipo AI",
-      "Logo link": "https://image.pitchbook.com/w4nhJERQkZNms3fkf0wjibKiRjKZr1717416524076_50x50",
-      "Url": "www.kipo.ai"
-    },
-    {
-      "Company Name": "SG Labs",
-      "Logo link": "https://image.pitchbook.com/RxTQray1tNjpzfNcWsiAmmC9sY51734678461639_110x110",
-      "Url": "qicscan.ai"
-    },
-    {
-      "Company Name": "SolidIntel",
-      "Logo link": "https://my.pitchbook.com/profile/588958-93/company/profile#general-info",
-      "Url": "www.solidintel.com"
-    },
-    {
-      "Company Name": "TrueNorth",
-      "Logo link": "https://image.pitchbook.com/lMdyQMc1tSsavHxcekTyndDG5R51685451895008_110x110",
-      "Url": "http://www.truenorth.com/"
-    },
-    {
-      "Company Name": "Vadar Alpha",
-      "Logo link": "https://image.pitchbook.com/s5kfhgcChMVgkCXynzf7WAeVCs8Er1766999996985_50x50",
-      "Url": "www.vadaralpha.com"
-    },
-    {
-      "Company Name": "Vooma",
-      "Logo link": "https://image.pitchbook.com/9SyJIuuxGOFYWiPfP9UuTZr2dS31733153439437_110x110",
-      "Url": "www.vooma.com"
-    },
-    {
-      "Company Name": "supplier.io",
-      "Logo link": "https://image.pitchbook.com/Nl7VyQRBmbc7EvdrwGfNBwXRuz2xc1687268487128_50x50",
-      "Url": "www.supplier.io"
+
+    function computeTotals(data) {
+      const categories = Object.keys(data).length;
+      let companies = 0;
+      Object.values(data).forEach((arr) => (companies += (arr || []).length));
+      return { categories, companies };
     }
-  ],
-  "Vehicle Platforms": [
-    {
-      "Company Name": "Amos Power",
-      "Logo link": "https://image.pitchbook.com/h68BnzxM4dO7cUPIMuyaIgfeTxU1751884254791_110x110",
-      "Url": "www.amospower.com"
-    },
-    {
-      "Company Name": "Datatruck",
-      "Logo link": "https://image.pitchbook.com/Q4Z4YrME6An0BJaockwpzNs2nJk1769612326454_110x110",
-      "Url": "www.datatruck.io"
-    },
-    {
-      "Company Name": "FireSwarm Solutions",
-      "Logo link": "https://image.pitchbook.com/KvwKZX8HzB3ASnCEI0CkK1xSVlD1747630413159_110x110",
-      "Url": "www.fireswarmsolutions.com"
-    },
-    {
-      "Company Name": "Launchpad",
-      "Logo link": "https://image.pitchbook.com/z57wf8ttCqSKwWBSecZNKdAqqyk1760538042761_110x110",
-      "Url": "www.launchpad.build"
-    },
-    {
-      "Company Name": "Salin 247",
-      "Logo link": "https://image.pitchbook.com/j7YUUcaevTUJO8BT2Qk0mWjjI0R1677564816912_110x110",
-      "Url": "salin247.com"
-    },
-    {
-      "Company Name": "Seaflight Technologies",
-      "Logo link": "https://image.pitchbook.com/L2PwNGq3GQd2qSauVaLHM57Pg2E1738070689369_110x110",
-      "Url": "www.seaflight.tech"
-    },
-    {
-      "Company Name": "Terraline",
-      "Logo link": "https://image.pitchbook.com/MN6vLoPVSsEbDVFkuzpP3psvmPa1673602241530_110x110",
-      "Url": "terraline.io"
+
+    function renderMarketMap() {
+      const container = document.getElementById("market-map");
+      container.innerHTML = "";
+
+      Object.entries(marketMapData).forEach(([category, companies]) => {
+        container.appendChild(createCategorySection(category, companies));
+      });
+
+      const totals = computeTotals(marketMapData);
+      const totalEl = document.getElementById("total-companies");
+      const labelEl = document.getElementById("total-label");
+      if (totalEl) totalEl.textContent = String(totals.companies);
+      if (labelEl) labelEl.textContent = `Companies Mapped Across ${totals.categories} Categories`;
     }
-  ]
-};
 
-        function createMarketMap() {
-            const container = document.getElementById('market-map');
-
-            Object.entries(marketMapData).forEach(([category, companies]) => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-
-                const header = document.createElement('div');
-                header.className = 'category-header';
-                header.innerHTML = `
-                    <div class="category-title">${category}</div>
-                    <div class="category-count">${companies.length} companies</div>
-                `;
-
-                const grid = document.createElement('div');
-                grid.className = 'companies-grid';
-
-                companies.forEach(company => {
-                    const card = document.createElement('a');
-                    card.className = 'company-card';
-
-                    let url = company.Url || '#';
-                    if (url !== '#' && !url.startsWith('http')) {
-                        url = 'http://' + url;
-                    }
-                    card.href = url;
-                    card.target = '_blank';
-
-                    const logoContainer = document.createElement('div');
-
-                    const logoUrl = resolveLogo(company);
-
-                    if (logoUrl) {
-                        const img = document.createElement('img');
-                        img.className = 'company-logo';
-                        img.src = logoUrl;
-                        img.alt = company['Company Name'];
-                        img.onerror = function() {
-                            this.style.display = 'none';
-                            const fallback = document.createElement('div');
-                            fallback.className = 'company-logo fallback';
-                            fallback.textContent = company['Company Name'];
-                            logoContainer.appendChild(fallback);
-                        };
-                        logoContainer.appendChild(img);
-                    } else {
-                        const fallback = document.createElement('div');
-                        fallback.className = 'company-logo fallback';
-                        fallback.textContent = company['Company Name'];
-                        logoContainer.appendChild(fallback);
-                    }
-
-                    const name = document.createElement('div');
-                    name.className = 'company-name';
-                    name.textContent = company['Company Name'];
-
-                    card.appendChild(logoContainer);
-                    card.appendChild(name);
-                    grid.appendChild(card);
-                });
-
-                section.appendChild(header);
-                section.appendChild(grid);
-                container.appendChild(section);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', createMarketMap);
-    </script>
+    document.addEventListener("DOMContentLoaded", renderMarketMap);
+  </script>
 </body>
 </html>
